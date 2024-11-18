@@ -1,0 +1,64 @@
+{% extends '../layout/index.html' %}
+{% block content %}
+{% load static %}
+<!-- https://play.tailwindcss.com/MIwj5Sp9pw -->
+<!-- component -->
+<div class="bg-cuscol2 flex justify-center items-center min-h-screen overflow-hidden">
+
+    <!-- Izquierda: Formulario de Inicio de Sesión -->
+    <div class="lg:p-36 md:p-52 sm:p-20 p-8 w-full lg:w-1/2">
+        <div class="rounded-xl shadow-lg bg-white">
+            <div class="border-4 border-black rounded-xl px-6 py-8 shadow-lg bg-white relative">
+                
+                <!-- Logo -->
+                <div class="relative">
+                    <div class="absolute inset-0 bg-cuscol2 border-4 w-44 h-44 -top-36 -left-0 mx-auto border-white rounded-xl items-center">
+                        <img src="{% static 'images/ecologo.jpeg' %}" alt="Logo" class="relative w-44 h-44 border-4 mx-auto border-white rounded-xl -top-4 -left-2">
+                    </div>
+                </div>
+                
+                <!-- Título -->
+                
+                <h1 class="mt-10 text-center text-cuscol2 text-2xl font-extrabold mb-4">Iniciar sesión</h1>
+                
+                <!-- Formulario -->
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <!-- Campo de Usuario -->
+                    <div class="mb-4">
+                        <label for="username" class="block text-cuscol2 font-semibold">Usuario</label>
+                        <input type="text" id="username" name="username" class="w-full border border-cuscol2 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+                    </div>
+                    
+                    <!-- Campo de Contraseña -->
+                    <div class="mb-4">
+                        <label for="password" class="block text-cuscol2 font-semibold">Contraseña</label>
+                        <input type="password" id="password" name="password" class="w-full border border-cuscol2 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autocomplete="off">
+                    </div>
+                    
+                    <!-- Botón de Ingreso -->
+                    <div class="relative flex justify-center">
+                        <div class="absolute inset-0 bg-cuscol2 w-3/4 h-full top-3 left-12 sm:left-16 rounded-3xl"></div>
+                        <button type="submit" class="bg-white rounded-3xl hover:bg-cuscol1 shadow-2xl shadow-left-bottom border-4 border-cuscol2 text-cuscol2 font-extrabold text-lg py-2 px-4 w-3/4 relative">Ingresar</button>
+                    </div>
+                </form>
+                
+                <!-- Enlace de Olvidó Contraseña -->
+                <div class="mt-6 text-center text-blue-500">
+                    <a href="#" class="hover:underline">¿Olvidaste tu contraseña?</a>
+                </div>
+                
+                <!-- Enlace de Registro -->
+                <div class="mt-2 text-blue-500 text-center">
+                    <a href="#" class="hover:underline">¿No tienes cuenta?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Derecha: Imagen -->
+    <div class="w-1/2 h-screen hidden lg:flex">
+        <img src="{% static 'images/imga1.jpg' %}" alt="Imagen" class="object-cover w-full h-full">
+    </div>
+</div>
+{% endblock %}
