@@ -172,6 +172,8 @@ cython_debug/
 !.vscode/extensions.json 
 .history
 
+# Configuration file
+conf.json
 
 
 

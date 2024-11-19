@@ -28,22 +28,31 @@ def Alumno_required(view_func):
 def Docente_required(view_func):
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
-        user_metadata = UsersMetadata.objects.get(user=request.user)
-        if user_metadata.perfil == 'D':
-            return view_func(request, *args, **kwargs)
-        else:
-            return redirect('no_access')  # Redirige a una vista que indica que no tiene acceso
+        try:
+            user_metadata = UsersMetadata.objects.get(user=request.user)
+            if user_metadata.perfil == 'D':
+                return view_func(request, *args, **kwargs)
+            else:
+                return redirect('no_access')  # Redirige a una vista que indica que no tiene acceso
+        except UsersMetadata.DoesNotExist:
+            # Si no existe el metadata, redirige a login o una página personalizada
+            return redirect('login')  # O alguna otra vista que desees
     return _wrapped_view
 
 def Coordinador_required(view_func):
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
-        user_metadata = UsersMetadata.objects.get(user=request.user)
-        if user_metadata.perfil == 'C':
-            return view_func(request, *args, **kwargs)
-        else:
-            return redirect('no_access')  # Redirige a una vista que indica que no tiene acceso
+        try:
+            user_metadata = UsersMetadata.objects.get(user=request.user)
+            if user_metadata.perfil == 'C':
+                return view_func(request, *args, **kwargs)
+            else:
+                return redirect('no_access')  # Redirige a una vista que indica que no tiene acceso
+        except UsersMetadata.DoesNotExist:
+            # Si no existe el metadata, redirige a login o una página personalizada
+            return redirect('login')  # O alguna otra vista que desees
     return _wrapped_view
+
 
 # def Pañol_required(view_func):
 #     @wraps(view_func)

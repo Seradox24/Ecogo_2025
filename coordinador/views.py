@@ -1,11 +1,12 @@
 # Create your views here.
-
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserCreationWithMetadataForm, UsersMetadataForm, UsersAcademyForm
 from django.contrib.auth import get_user_model
 from core.decorators import Coordinador_required
 
+
+@Coordinador_required
 def crear_usuario(request):
     if request.method == 'POST':
         # Crear las instancias de los formularios con los datos enviados por POST
@@ -35,7 +36,7 @@ def crear_usuario(request):
             academy.save()
 
             messages.success(request, "Usuario agregado correctamente!")
-            return redirect('gest-usuarios')  # Redirigir después de guardar
+            return redirect('coordinador:home_coordinador')  # Redirigir después de guardar
         else:
             messages.error(request, "Errores en el formulario, por favor corrígelos.")
     
@@ -50,6 +51,7 @@ def crear_usuario(request):
         'metadata_form': metadata_form,
         'academy_form': academy_form
     })
+
 
 @Coordinador_required
 def home_coordinador(request):

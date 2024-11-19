@@ -1,51 +1,178 @@
-{% extends '../layout/index.html' %}
+{% extends '../layout/index_C.html' %}
 {% load static %}
 {% block content %}
 {% load tailwind_filters %}
 
-  <h2>Crear Nuevo Usuario</h2>
 
-  <form method="POST" enctype="multipart/form-data">
+<div class="mb-4 flex items-center">
+  <button class="btn btn-secondary flex items-center">
+    <img src="{% static 'botones/barrow.svg' %}" alt="Volver" class="h-24 mr-2">
+    <span class="mx-auto text-5xl text-center font-extrabold -mt-5">Crear Nuevo Usuario</span>
+  </button>
+</div>
+
+  <div class="mb-4  ">
+    
+  <h1 class="mx-auto text-5xl text-center font-extrabold"> Crear Nuevo Usuario</h1>
+  </div>
+  <form class="px-10 font-semibold " method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     
     <!-- Formulario para crear usuario -->
-    <div class="card mb-4">
-        <div class="card-header">Información del Usuario</div>
-        <div class="card-body">
-            <div class="mb-4">
-                {{ user_form.username }}  <!-- Renderiza el campo sin crispy -->
-            </div>
-            <div class="mb-4">
-                
-                {{ user_form.email }}  <!-- Renderiza el campo sin crispy -->
-            </div>
-            <div class="mb-4">
-                {{ user_form.password1 }}  <!-- Renderiza el campo sin crispy -->
-            </div>
-            <div class="mb-4">
-                {{ user_form.password2 }}  <!-- Renderiza el campo sin crispy -->
-            </div>
+    <div class="card mb-4 border border-gray-300 rounded-lg shadow-md text-cuscol2 ">
+      <div class="card-header font-semibold bg-gray-100 p-4">Credenciales de Acceso</div>
+      <div class="card-body p-4">
+        <div class="mb-4">
+          <label for="{{ user_form.username.id_for_label }}" class="form-label ">Nombre de Usuario</label>
+          {{ user_form.username|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
         </div>
+        <div class="mb-4">
+          <label for="{{ user_form.email.id_for_label }}" class="form-label">Correo Electrónico</label>
+          {{ user_form.email|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+        </div>
+        <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="{{ user_form.password1.id_for_label }}" class="form-label">Contraseña</label>
+            {{ user_form.password1|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+          <div>
+            <label for="{{ user_form.password2.id_for_label }}" class="form-label">Confirmar Contraseña</label>
+            {{ user_form.password2|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+        </div>
+      </div>
     </div>
+    
 
     <!-- Formulario de Metadatos -->
-    <div class="card mb-4 ">
-      <div class="card-header">Metadatos del Usuario</div>
-      <div class="card-body">
-        {{ metadata_form|crispy}}
+    <div class="card mb-4 border border-gray-300 rounded-lg shadow-md text-cuscol2">
+      <div class="card-header font-semibold bg-gray-100 p-4">Metadatos del Usuario</div>
+      <div class="card-body p-4">
+    
+      <!-- Formulario con los campos -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    
+        <!-- Campo para el RUT -->
+        <div class="w-full">
+        <label for="{{ metadata_form.rut.id_for_label }}" class="form-label">Rut</label>
+        {{ metadata_form.rut|as_crispy_field }}
+        </div>
+    
+        <!-- Campo para el sexo -->
+        <div class="w-full">
+        <label for="{{ metadata_form.sexo.id_for_label }}" class="form-label">Sexo</label>
+        {{ metadata_form.sexo|as_crispy_field }}
+        </div>
+    
+        <!-- Campo para el perfil -->
+       
+    
+        <!-- Campo para los nombres -->
+        <div class="w-full">
+        <label for="{{ metadata_form.nombres.id_for_label }}" class="form-label">Nombres</label>
+        {{ metadata_form.nombres|as_crispy_field }}
+        </div>
+    
+        <!-- Campo para el apellido paterno -->
+        <div class="w-full">
+        <label for="{{ metadata_form.ap_paterno.id_for_label }}" class="form-label">Apellido Paterno</label>
+        {{ metadata_form.ap_paterno|as_crispy_field }}
+        </div>
+    
+        <!-- Campo para el apellido materno -->
+        <div class="w-full">
+        <label for="{{ metadata_form.ap_materno.id_for_label }}" class="form-label">Apellido Materno</label>
+        {{ metadata_form.ap_materno|as_crispy_field }}
+        </div>
+    
+        <!-- Campo para la fecha de nacimiento -->
+        <div class="w-full">
+        <label for="{{ metadata_form.fnacimiento.id_for_label }}" class="form-label">Fecha de Nacimiento</label>
+        {{ metadata_form.fnacimiento|as_crispy_field }}
+        </div>
+    
+        <!-- Campo para el estado civil -->
+        <div class="w-full">
+        <label for="{{ metadata_form.estado_civil.id_for_label }}" class="form-label">Estado Civil</label>
+        {{ metadata_form.estado_civil|as_crispy_field }}
+        </div>
+    
+        <!-- Campo para la dirección -->
+        <div class="w-full">
+        <label for="{{ metadata_form.direccion.id_for_label }}" class="form-label">Dirección</label>
+        {{ metadata_form.direccion|as_crispy_field }}
+        </div>
+    
+        <!-- Campo para el número -->
+        <div class="w-full">
+        <label for="{{ metadata_form.numero.id_for_label }}" class="form-label">Número</label>
+        {{ metadata_form.numero|as_crispy_field }}
+        </div>
+    
+        <!-- Campo para el celular -->
+        <div class="w-full">
+        <label for="{{ metadata_form.celular.id_for_label }}" class="form-label">Celular</label>
+        {{ metadata_form.celular|as_crispy_field }}
+        </div>
+    
+        <!-- Campo para la foto -->
+        <div class="w-full md:col-span-2 text-xs">
+        <label for="{{ metadata_form.foto.id_for_label }}" class="form-label"></label>
+        {{ metadata_form.foto|as_crispy_field }}
+        </div>
+    
+      </div>
+    
       </div>
     </div>
+  
 
-    <!-- Formulario de Información Académica -->
-    <div class="card mb-4">
-      <div class="card-header">Información Académica</div>
-      <div class="card-body">
-        {{ academy_form|crispy}}
+    <div class="card mb-4 border border-gray-300 rounded-lg shadow-md text-cuscol2 ">
+      <div class="card-header font-semibold bg-gray-100 p-4">Información Académica</div>
+      <div class="card-body p-4">
+        <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mb-4">
+            <label for="{{ metadata_form.perfil.id_for_label }}" class="form-label ">Perfil académico</label>
+            {{ metadata_form.perfil|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+        <div class="mb-4">
+          <label for="{{ academy_form.semestre.id_for_label }}" class="form-label ">Semestre académico</label>
+          {{ academy_form.semestre|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+        </div>
+        <div class="mb-4">
+          <label for="{{ academy_form.sede.id_for_label }}" class="form-label">Sede</label>
+          {{ academy_form.sede|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+        </div>
+        
+          <div>
+            <label for="{{ academy_form.nom_carrera.id_for_label }}" class="form-label">Nombre de la carrera</label>
+            {{ academy_form.nom_carrera|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+          <div>
+            <label for="{{ academy_form.modalidad.id_for_label }}" class="form-label">Modalidad</label>
+            {{ academy_form.modalidad|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+          <div>
+            <label for="{{ academy_form.jornada.id_for_label }}" class="form-label">Jornada</label>
+            {{ academy_form.jornada|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+          
+        </div>
+        <div class="mb-4">
+          <label for="{{ user_form.asignaturas_inscritas.id_for_label }}" class="form-label ">Asignaturas inscritas</label>
+          {{ academy_form.asignaturas_inscritas|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+        </div>
       </div>
     </div>
+    
+
+    <div class="relative flex justify-center py-10">
+                        
+      <button type="submit" class="bg-cuscol4 rounded-3xl boton sombra  border-4 border-cuscol2 text-cuscol2 font-extrabold text-lg py-2 px-4 w-3/4 relative">Crear</button>
+  </div>
 
     <!-- Botón para enviar el formulario -->
-    <button type="submit" class="btn btn-primary">Crear Usuario</button>
+    
   </form>
 
   {% endblock %}

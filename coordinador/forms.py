@@ -12,22 +12,31 @@ class UserCreationWithMetadataForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
         # Definir widgets personalizados con Tailwind
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-input mt-1 block w-full border-gray-300 rounded-md',
-        'placeholder': 'Nombre de usuario'
-    }))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'class': 'form-input mt-1 block w-full border-gray-300 rounded-md',
-        'placeholder': 'Correo electrónico'
-    }))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-input mt-1 block w-full border-gray-300 rounded-md',
-        'placeholder': 'Contraseña'
-    }))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-input mt-1 block w-full border-gray-300 rounded-md',
-        'placeholder': 'Confirmar contraseña'
-    }))
+    username = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={
+            'class': 'form-input mt-1 block w-full border-gray-300 rounded-md',
+            'placeholder': 'Nombre de usuario'
+        }))
+    email = forms.EmailField(
+        label="",
+        widget=forms.EmailInput(attrs={
+            'class': 'form-input mt-1 block w-full border-gray-300 rounded-md',
+            'placeholder': 'Correo electrónico'
+        }))
+    password1 = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input mt-1 block w-full border-gray-300 rounded-md',
+            'placeholder': 'Contraseña'
+        }))
+    password2 = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input mt-1 block w-full border-gray-300 rounded-md',
+            'placeholder': 'Confirmar contraseña'
+        }))
+    
     
     
     
@@ -59,18 +68,18 @@ class UsersMetadataForm(forms.ModelForm):
             'foto': forms.ClearableFileInput(attrs={'class': 'form-control border-gray-300'}),
         }
         labels = {
-            'sexo': 'Sexo',
-            'perfil': 'Perfil de usuario',
-            'rut': 'RUT',
-            'nombres': 'Nombres',
-            'ap_paterno': 'Apellido paterno',
-            'ap_materno': 'Apellido materno',
-            'fnacimiento': 'Fecha de nacimiento',
-            'estado_civil': 'Estado civil',
-            'direccion': 'Dirección',
-            'numero': 'Número',
-            'celular': 'Teléfono celular',
-            'foto': 'Foto de perfil',
+            'sexo': '',
+            'perfil': '',
+            'rut': '',
+            'nombres': '',
+            'ap_paterno': '',
+            'ap_materno': '',
+            'fnacimiento': '',
+            'estado_civil': '',
+            'direccion': '',
+            'numero': '',
+            'celular': '',
+            'foto': '',
         }
 
 
@@ -89,10 +98,10 @@ class UsersAcademyForm(forms.ModelForm):
             'asignaturas_inscritas': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
         }
         labels = {
-            'semestre': 'Semestre académico',
-            'sede': 'Sede',
-            'nom_carrera': 'Nombre de la carrera',
-            'modalidad': 'Modalidad de estudio',
-            'jornada': 'Jornada',
-            'asignaturas_inscritas': 'Asignaturas inscritas',
+            'semestre': '',
+            'sede': '',
+            'nom_carrera': '',
+            'modalidad': '',
+            'jornada': '',
+            'asignaturas_inscritas': '',
         }
