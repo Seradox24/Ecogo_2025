@@ -1,0 +1,51 @@
+{% extends '../layout/index.html' %}
+{% load static %}
+{% block content %}
+{% load tailwind_filters %}
+
+  <h2>Crear Nuevo Usuario</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <!-- Formulario para crear usuario -->
+    <div class="card mb-4">
+        <div class="card-header">Información del Usuario</div>
+        <div class="card-body">
+            <div class="mb-4">
+                {{ user_form.username }}  <!-- Renderiza el campo sin crispy -->
+            </div>
+            <div class="mb-4">
+                
+                {{ user_form.email }}  <!-- Renderiza el campo sin crispy -->
+            </div>
+            <div class="mb-4">
+                {{ user_form.password1 }}  <!-- Renderiza el campo sin crispy -->
+            </div>
+            <div class="mb-4">
+                {{ user_form.password2 }}  <!-- Renderiza el campo sin crispy -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de Metadatos -->
+    <div class="card mb-4 ">
+      <div class="card-header">Metadatos del Usuario</div>
+      <div class="card-body">
+        {{ metadata_form|crispy}}
+      </div>
+    </div>
+
+    <!-- Formulario de Información Académica -->
+    <div class="card mb-4">
+      <div class="card-header">Información Académica</div>
+      <div class="card-body">
+        {{ academy_form|crispy}}
+      </div>
+    </div>
+
+    <!-- Botón para enviar el formulario -->
+    <button type="submit" class="btn btn-primary">Crear Usuario</button>
+  </form>
+
+  {% endblock %}

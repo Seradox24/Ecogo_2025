@@ -1,6 +1,11 @@
+{% extends '../layout/index_A.html' %}
+{% block content %}
+{% load static %}
+
+
 {% if user.is_authenticated %}
     <h1>Hola, {{ user.username }}</h1>
-    <p>Nombre de la tabla: User</p>
+    <p >Nombre de la tabla: User</p>
 {% else %}
     <h1>Hola</h1>
 {% endif %}
@@ -12,4 +17,4 @@
     </form>
 {% endif %}
 
-
+{% endblock %}

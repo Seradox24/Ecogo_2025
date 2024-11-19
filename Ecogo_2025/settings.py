@@ -68,9 +68,11 @@ INSTALLED_APPS = [
     'tailwind',
     'theme' ,
     'django_browser_reload',
+    'crispy_forms',
+    'crispy_tailwind',
 ]
 
-TAILWIND_APP_NAME = 'theme'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -110,11 +112,25 @@ WSGI_APPLICATION = 'Ecogo_2025.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'db.sqlite3',
+        
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
 
     }
 }
+
+# settings.py
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": conf["DATABASE_NAME"],
+#         "USER": conf["DATABASE_USER"],
+#         "PASSWORD": conf["DATABASE_PASSWORD"],
+#         "HOST": conf["DATABASE_HOST"],
+#         "PORT": conf["DATABASE_PORT"],
+        
+#     }
+# }
+
 
 
 # Password validation
@@ -197,3 +213,9 @@ JAZZMIN_SETTINGS = {
 
     
 }
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+
+CRISPY_TEMPLATE_PACK = "tailwind"
+TAILWIND_APP_NAME = 'theme'

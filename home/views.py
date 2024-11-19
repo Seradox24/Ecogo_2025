@@ -1,6 +1,15 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.shortcuts import render, redirect
+from core.decorators import Alumno_required
+from core.models import UsersMetadata
+from django.contrib.auth.decorators import user_passes_test
 
-# Create your views here.
 
 def home(request):
+
+    
+        
     return render(request, 'home/home.html')
+
+ 
