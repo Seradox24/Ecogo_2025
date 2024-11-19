@@ -17,7 +17,7 @@ def Alumno_required(view_func):
             if user_metadata.perfil == 'A':
                 return view_func(request, *args, **kwargs)
             else:
-                logout(request)
+                
                 return redirect(reverse('no_access')) # Redirige a una vista que indica que no tiene acceso
         except UsersMetadata.DoesNotExist:
             
