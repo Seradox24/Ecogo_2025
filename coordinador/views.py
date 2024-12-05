@@ -1,10 +1,26 @@
-# Create your views here.
+# import de librerias generales
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserCreationWithMetadataForm, UsersMetadataForm, UsersAcademyForm
-from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from core.decorators import Coordinador_required
+# import de librerias crear usuarios
+from .forms import UserCreationWithMetadataForm, UsersMetadataForm, UsersAcademyForm
+# import de librerias listar salidas
+from coordinador.models import SalidaTerreno
 
+
+
+
+#home coordinador -------------------------------------------------------------------------------------
+
+@Coordinador_required
+def home_coordinador(request):
+    return render(request, 'coordinador/home_coordinador.html')
+
+
+#usuarios ---------------------------------------------------------------------------------------------
 
 @Coordinador_required
 def crear_usuario(request):
@@ -46,15 +62,31 @@ def crear_usuario(request):
         metadata_form = UsersMetadataForm()
         academy_form = UsersAcademyForm()
 
-    return render(request, 'coordinador/crear_usuario.html', {
+    return render(request, 'coordinador/usuarios/crear_usuario.html', {
         'user_form': user_form,
         'metadata_form': metadata_form,
         'academy_form': academy_form
     })
 
 
+#salidas ---------------------------------------------------------------------------------------------
+
+@login_required
 @Coordinador_required
-def home_coordinador(request):
-    return render(request, 'coordinador/home_coordinador.html')
+def listar_salida(request):
+    salidas = SalidaTerreno.objects.all().order_by('-id')
+    page = request.GET.get('page', 1)
+
+    try:
+        paginator = Paginator(salidas, 6)#cambio de cantidad a listar por salida 
+        salidas = paginator.page(page)
+    except:
+        raise Http404
 
 
+    data = {
+        'salidas': salidas,
+        'paginator': paginator
+    }
+
+    return render(request, 'coordinador/salidas/listar_salida.html', data)

@@ -1,0 +1,33 @@
+{% extends '../../layout/index_C.html' %}
+{% load static %}
+{% block content %}
+{% load tailwind_filters %}
+
+<div class="mb-4 flex items-center py-14">
+    <button class="btn btn-secondary flex items-center">
+      <img src="{% static 'botones/barrow.svg' %}" alt="Volver" class="h-6 mr-2 "> <!-- Ajustar el tamaño de la imagen para que sea más flexible -->
+      <span class="text-2xl sm:text-3xl font-extrabold">Volver</span> <!-- Texto adaptativo para pantallas pequeñas -->
+    </button>
+</div>
+
+<h1 class="text-3xl pd sm:text-5xl font-extrabold mb-4 md:mb-0 text-center md:text-center w-full md:w-auto">Salidas a terreno</h1>
+
+<div class="mb-4 flex flex-col items-center md:flex-row md:items-center md:justify-between px-4">
+   
+    
+    <div class="md:ml-auto">
+        <a href="" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base">Agregar nueva salida  
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+        </a>
+    </div>
+</div>
+
+
+    
+
+    
+
+
+{% endblock %}
