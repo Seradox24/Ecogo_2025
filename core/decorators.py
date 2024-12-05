@@ -1,65 +1,70 @@
+### Este archivo define decoradores para restringir el acceso a vistas en función del perfil del usuario.
+### Los decoradores verifican el perfil del usuario asociado al objeto `UsersMetadata`.
+### Si el perfil coincide con el requerido, la vista se ejecuta; de lo contrario, el usuario es redirigido.
+### Decoradores incluidos:
+### - `Alumno_required`: Restringe acceso solo a usuarios con perfil de Alumno ('A').
+### - `Docente_required`: Restringe acceso solo a usuarios con perfil de Docente ('D').
+### - `Coordinador_required`: Restringe acceso solo a usuarios con perfil de Coordinador ('C').
+
 from functools import wraps
-from django.shortcuts import render, redirect
-from core.models import UsersMetadata
-from django.urls import reverse
-from django.http import Http404
+from django.shortcuts import redirect, reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from .models import UsersMetadata
 
-
-
+# Decorador para restringir acceso a usuarios con perfil 'Alumno'
 def Alumno_required(view_func):
-    @wraps(view_func)
-    @login_required
+    @wraps(view_func)  # Preserva los metadatos de la función original
+    @login_required  # Requiere que el usuario esté autenticado
     def _wrapped_view(request, *args, **kwargs):
         try:
+            # Obtiene los metadatos del usuario actual
             user_metadata = UsersMetadata.objects.get(user=request.user)
+            
+            # Verifica si el perfil es 'Alumno' ('A')
             if user_metadata.perfil == 'A':
-                return view_func(request, *args, **kwargs)
+                return view_func(request, *args, **kwargs)  # Ejecuta la vista original
             else:
-                
-                return redirect(reverse('no_access')) # Redirige a una vista que indica que no tiene acceso
+                # Redirige a una vista de acceso denegado si el perfil no coincide
+                return redirect(reverse('no_access'))
         except UsersMetadata.DoesNotExist:
-            
-            
-            return redirect('login')  # Redirect to login page after logout
+            # Si no existen metadatos para el usuario, redirige al login
+            return redirect('login')
     return _wrapped_view
 
+# Decorador para restringir acceso a usuarios con perfil 'Docente'
 def Docente_required(view_func):
-    @wraps(view_func)
+    @wraps(view_func)  # Preserva los metadatos de la función original
     def _wrapped_view(request, *args, **kwargs):
         try:
+            # Obtiene los metadatos del usuario actual
             user_metadata = UsersMetadata.objects.get(user=request.user)
+
+            # Verifica si el perfil es 'Docente' ('D')
             if user_metadata.perfil == 'D':
-                return view_func(request, *args, **kwargs)
+                return view_func(request, *args, **kwargs)  # Ejecuta la vista original
             else:
-                return redirect('no_access')  # Redirige a una vista que indica que no tiene acceso
+                # Redirige a una vista de acceso denegado si el perfil no coincide
+                return redirect('no_access')
         except UsersMetadata.DoesNotExist:
-            # Si no existe el metadata, redirige a login o una página personalizada
-            return redirect('login')  # O alguna otra vista que desees
+            # Si no existen metadatos para el usuario, redirige al login
+            return redirect('login')
     return _wrapped_view
 
+# Decorador para restringir acceso a usuarios con perfil 'Coordinador'
 def Coordinador_required(view_func):
-    @wraps(view_func)
+    @wraps(view_func)  # Preserva los metadatos de la función original
     def _wrapped_view(request, *args, **kwargs):
         try:
+            # Obtiene los metadatos del usuario actual
             user_metadata = UsersMetadata.objects.get(user=request.user)
+
+            # Verifica si el perfil es 'Coordinador' ('C')
             if user_metadata.perfil == 'C':
-                return view_func(request, *args, **kwargs)
+                return view_func(request, *args, **kwargs)  # Ejecuta la vista original
             else:
-                return redirect('no_access')  # Redirige a una vista que indica que no tiene acceso
+                # Redirige a una vista de acceso denegado si el perfil no coincide
+                return redirect('no_access')
         except UsersMetadata.DoesNotExist:
-            # Si no existe el metadata, redirige a login o una página personalizada
-            return redirect('login')  # O alguna otra vista que desees
+            # Si no existen metadatos para el usuario, redirige al login
+            return redirect('login')
     return _wrapped_view
-
-
-# def Pañol_required(view_func):
-#     @wraps(view_func)
-#     def _wrapped_view(request, *args, **kwargs):
-#         user_metadata = UsersMetadata.objects.get(user=request.user)
-#         if user_metadata.perfil.nombre == 'Pañol':
-#             return view_func(request, *args, **kwargs)
-#         else:
-#             return redirect('no_access')  # Redirige a una vista que indica que no tiene acceso
-#     return _wrapped_view

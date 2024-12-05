@@ -1,0 +1,4 @@
+-- fotos pendiendes 
+-- fecha ultima salida (sabado 18 de diciembre )
+-- agregar logo de la escuela al login 
+-- titulo centrado 
