@@ -152,15 +152,11 @@
         {% endblock %}
     </main>
     
-    <footer class=" text-cuscol4 bg-cuscol2 ">
-        <div class=" " >
-            <div class=" " >
-            <img src="{% static 'images/elementos gráficos/esquina-eco.webp' %}" alt="Imagen" class="object-cover md:w-36 md:h-36 w-16 h-16 ">
-            <p class="text-sm text-center   ">&copy; 2024-2025 EcoGo. Todos los derechos reservados.</p>
-            </div>
-        
+    <footer class="fixed bottom-0 left-0 w-full text-cuscol4 bg-cuscol2 ">
+        <div class="relative">
+            <img src="{% static 'images/elementos gráficos/esquina-eco.webp' %}" alt="Imagen" class="absolute bottom-0 left-0 h-full w-auto object-contain md:h-full">
+            <p class="text-sm text-center py-4">&copy; 2024-2025 EcoGo. Todos los derechos reservados.</p>
         </div>
-        
     </footer>
     
 </body>

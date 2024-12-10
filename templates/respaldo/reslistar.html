@@ -1,0 +1,217 @@
+
+<div class="container mx-auto px-4 py-6 hidden sm:block">
+    
+    
+    
+    <!-- Tabla de salidas -->
+     
+    <div class="overflow-x-auto mb-8  ">
+        {% for salida in salidas %} 
+
+       
+
+        <table class="border-separate border-spacing-0  py-6 md:pl-72 ">
+           
+        <div class="pt-10 flex "> 
+        <a href="{% url 'coordinador:editar_salida' salida.id %}" class="boton borde-trazo-3 px-6 mx-5 py-2 text-sm sm:text-base flex items-center">
+            <span>Editar </span>
+        </a>
+        <button class="boton borde-trazo-3 px-6 mx-5 py-2 text-sm sm:text-base flex items-center">
+            <span>Notificar</span>
+            
+        </button>
+        <button class="boton borde-trazo-3 px-6 mx-2 py-2 text-sm sm:text-base flex items-center">
+            <span>Agregar documentos</span>
+            
+        </button>
+        <button class="rounded-xl  bg-gray-400 hover:bg-cuscol2 text-white px-6 mx-2 py-2 text-sm sm:text-base flex items-center">
+            <span>Eliminar</span>
+            
+        </button>
+        </div>
+            
+            <thead class="bg-white-600 ">
+                
+                <tr class= >
+                    
+                    <th class="rounded-tl-2xl  border-cuscol2 border-4  bg-white px-12 py-2 text-cuscol2 font-semibold text-end ">Viabilidad</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">Visible?</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">Situación</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">Nº Cuenta</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">Semestre</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">Año</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">Semana</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">Dias Semana</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">fecha inicio</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">fecha termino</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">DÍAS</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">NOCHES</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">Lugar de ejecución</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">ASIGNATURAS</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">EXPERIENCIA  DE APRENDIZAJE</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">Q ALUMNOS</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">SECCIONES POR DOCENTE</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">DOCENTES TITULARES</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">DOCENTES APOYO PROPUESTO</th>
+                    <th class="border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">Nº SALIDA</th>
+                    <th class="rounded-tr-2xl border-cuscol2 border-y-4 border-r-4  bg-white px-12 py-2 text-cuscol2 font-semibold">Observaciones</th>
+
+
+
+
+
+                </tr>
+            </thead>
+            <tbody class="text-center">
+
+                
+
+                <div class=" relative dr-none  ">
+                    <div class="top-10 left-0 right-0  ">
+                    <div class="absolute w-64 h-52  bg-cuscol2 -bottom-60 -left-0 rounded-2xl">
+                        <span class="absolute text-cuscol3 text-2xl font-bold right-10">
+                            {{ salida.numero_cuenta }}
+                        </span>
+                        <div class="flex justify-center items-center h-full">
+                            <span class="text-cuscol4 text-center text-2xl font-bold">
+                                {{ salida.actividad }}
+                            </span>
+                        </div>
+
+                    </div >  
+                <div class="absolute w-16 h-5  bg-cuscol1 -bottom-60 -left-0 rounded-bl-2xl">
+                </div >
+                <div class="absolute w-48 h-5  bg-cuscol3 -bottom-60 left-16 rounded-br-2xl">                 
+                </div >
+                </div ></div >
+
+
+                <tr class=" {% cycle 'bg-white' 'bg-gray-50' %}">
+                    <td class="rounded-bl-2xl   border-cuscol2 border-b-4 border-x-4  bg-white px-20 py-2 text-cuscol2">
+                        
+                        <span class="ml-2 px-7 py-4 rounded-full text-white 
+                            {% if salida.semaforo == 'verde' %}
+                                bg-green-500
+                            {% elif salida.semaforo == 'amarillo' %}
+                                bg-yellow-500
+                            {% elif salida.semaforo == 'rojo' %}
+                                bg-red-500    
+                            {% else %}
+                                bg-gray-500
+                            {% endif %}">
+                           
+                        </span>
+                    </td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 ">
+                        
+                        <span class=" text-center font-extrabold text-3xl
+                            {% if salida.activo == True %}
+                                text-green-500
+                            {% elif salida.activo == False %}
+                                text-red-500  
+                            {% endif %}">
+                            {% if salida.activo == True %}
+                            
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="w-10 h-10">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        {% elif salida.activo == False %}
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="w-10 h-10">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                        </svg>
+                        {% endif %}
+                        </span>
+                    </td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-12 text-cuscol2">{{ salida.estado }}</td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.numero_cuenta }}</td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.get_semestre_display }}</td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.anio }}</td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.semana }}</td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">
+                    {% if salida.diasemana.all %}
+                        {% for dia in salida.diasemana.all %}
+                            {{ dia.nombre }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        Por definir
+                    {% endif %}
+                    </td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.fecha_ingreso }}</td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.fecha_termino }}</td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.dias }}</td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.noches }}</td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.lugar_ejecucion }}</td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-64 py-2 text-cuscol2">
+                        {% for asignatura in salida.asignaturas.all %}
+                            <span class="inline-block bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs">
+                                {{ asignatura.nombre }} - {{ asignatura.sigla }}
+                            </span>
+                        {% empty %}
+                            <span class="text-gray-400">No asignadas</span>
+                        {% endfor %}
+                    </td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.exp_aprendizaje }}</td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.total_inscritos }}</td>
+                    
+                    <td class="border-cuscol2 border-b-4 border-r-4 bg-white px-64 py-2 text-cuscol2">
+                        {% for seccion in salida.secciones.all %}
+                            {{ seccion }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            Sin secciones
+                        {% endfor %}
+                    </td>
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-64 py-2 text-cuscol2">
+                        {% for asignatura in salida.asignaturas.all %}
+                            
+                               ({{ asignatura.coordinador.usersmetadata.nombres|default:"Sin nombre" }} {{ asignatura.coordinador.usersmetadata.ap_paterno|default:"Sin apellido" }} - {{ asignatura.nombre }}) {% if not forloop.last %}, {% endif %}
+                            
+                        {% empty %}
+                            <span class="text-gray-400">No asignadas</span>
+                        {% endfor %}
+                    </td>
+                    
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-64 py-2 text-cuscol2">
+                    {% for docente in salida.docentes_apoyo.all %}
+                       ( {{ docente.nombres }} {{ docente.ap_paterno }}){% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        <span class="text-gray-400">Sin docentes de apoyo</span>
+                    {% endfor %}</td>
+
+                    <td class="border-cuscol2 border-b-4 border-r-4  bg-white px-20 py-2 text-cuscol2">{{ salida.num_salida }}</td>
+                    <td class="rounded-br-2xl border-cuscol2 border-b-4 border-r-4  bg-white px-64 py-2 text-cuscol2">{{ salida.observaciones }}</td>
+
+                   
+                    
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center text-gray-500 py-4">No hay salidas registradas.</td>
+                </tr>
+                
+            </tbody>
+            {% endfor %}
+        </table>
+        
+    </div>
+
+    <!-- Paginación -->
+    <div class="mt-6 flex justify-center">
+        <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+            {% if salidas.has_previous %}
+            <a href="?page={{ salidas.previous_page_number }}" class="px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 rounded-l-md">Anterior</a>
+            {% endif %}
+
+            {% for num in salidas.paginator.page_range %}
+            <a href="?page={{ num }}" 
+                class="px-4 py-2 {% if num == salidas.number %} bg-blue-500 text-white {% else %} bg-white text-gray-700 hover:bg-gray-100 {% endif %}">
+                {{ num }}
+            </a>
+            {% endfor %}
+
+            {% if salidas.has_next %}
+            <a href="?page={{ salidas.next_page_number }}" class="px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 rounded-r-md">Siguiente</a>
+            {% endif %}
+        </nav>
+    </div>
+</div>
