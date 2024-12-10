@@ -100,7 +100,7 @@ def listar_salida(request):
 
     return render(request, 'coordinador/salidas/listar_salida.html', data)
 
-
+# ----------------------------------------  Crear Salida  -----------------------------------------------------
 @login_required
 @Coordinador_required
 def crear_salida(request):
@@ -118,6 +118,8 @@ def crear_salida(request):
         return render(request, 'coordinador/salidas/crear_salida.html', {
             'form': form
         })
+
+# ----------------------------------------  Editar Salida  -----------------------------------------------------
 
 @login_required
 @Coordinador_required
@@ -149,9 +151,12 @@ def editar_salida(request, id):
         'salida': salida
     })
 
-
+# ----------------------------------------  Eliminar Salida  -----------------------------------------------------
+from django.shortcuts import get_object_or_404, redirect
 @login_required
 @Coordinador_required
 def eliminar_salida(request, id):
-    return render(request, 'coordinador/salidas/eliminar_salida.html')
-
+    salida = get_object_or_404(SalidaTerreno, id=id)
+    salida.delete()
+    messages.success(request, f"La salida con ID {id} ha sido eliminada correctamente.")
+    return redirect('coordinador:listar_salida')
