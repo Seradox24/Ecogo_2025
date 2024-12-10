@@ -5,10 +5,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from core.decorators import Coordinador_required
+from core.models import Inscripcion
 # import de librerias crear usuarios
 from .forms import UserCreationWithMetadataForm, UsersMetadataForm, UsersAcademyForm
 # import de librerias listar salidas
 from coordinador.models import SalidaTerreno
+from .forms import SalidaTerrenoForm
 
 
 
@@ -74,15 +76,22 @@ def crear_usuario(request):
 @login_required
 @Coordinador_required
 def listar_salida(request):
-    salidas = SalidaTerreno.objects.all().order_by('-id')
+    salidas = SalidaTerreno.objects.all().order_by('id')
     page = request.GET.get('page', 1)
 
     try:
-        paginator = Paginator(salidas, 6)#cambio de cantidad a listar por salida 
+        paginator = Paginator(salidas, 6)  # Cambio de cantidad a listar por salida
         salidas = paginator.page(page)
     except:
         raise Http404
 
+    # Agregar el conteo de alumnos inscritos en estado "ACTIVA"
+    for salida in salidas:
+        secciones = salida.secciones.all()
+        salida.total_inscritos = Inscripcion.objects.filter(
+            seccion__in=secciones,
+            estado='ACTIVA'  # Filtro para solo incluir inscripciones activas
+        ).count()
 
     data = {
         'salidas': salidas,
@@ -90,3 +99,59 @@ def listar_salida(request):
     }
 
     return render(request, 'coordinador/salidas/listar_salida.html', data)
+
+
+@login_required
+@Coordinador_required
+def crear_salida(request):
+        if request.method == 'POST':
+            form = SalidaTerrenoForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Salida de terreno creada correctamente!")
+                return redirect('coordinador:listar_salida')
+            else:
+                messages.error(request, "Errores en el formulario, por favor corrígelos.")
+        else:
+            form = SalidaTerrenoForm()
+
+        return render(request, 'coordinador/salidas/crear_salida.html', {
+            'form': form
+        })
+
+@login_required
+@Coordinador_required
+def editar_salida(request, id):
+    try:
+        salida = SalidaTerreno.objects.get(id=id)
+    except SalidaTerreno.DoesNotExist:
+        messages.error(request, "La salida de terreno que intentas editar no existe.")
+        return redirect('coordinador:listar_salida')
+    
+    if request.method == 'POST':
+        form = SalidaTerrenoForm(request.POST, request.FILES, instance=salida)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Salida de terreno actualizada correctamente!")
+            return redirect('coordinador:listar_salida')
+        else:
+            messages.error(request, "Errores en el formulario, por favor corrígelos.")
+    else:
+        # Precarga de datos en el formulario
+        initial_data = {
+            'fecha_ingreso': salida.fecha_ingreso,
+            'fecha_termino': salida.fecha_termino,
+        }
+        form = SalidaTerrenoForm(instance=salida, initial=initial_data)
+
+    return render(request, 'coordinador/salidas/editar_salida.html', {
+        'form': form,
+        'salida': salida
+    })
+
+
+@login_required
+@Coordinador_required
+def eliminar_salida(request, id):
+    return render(request, 'coordinador/salidas/eliminar_salida.html')
+

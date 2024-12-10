@@ -1,8 +1,11 @@
+#--------- import form usuarios
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from core.models import UsersMetadata,UsersAcademy
-
+from core.models import  Asignatura, Seccion, UsersMetadata
+from .models import SalidaTerreno, DiaSemana
+#--------- import form salidas
 
 
 class UserCreationWithMetadataForm(UserCreationForm):
@@ -38,12 +41,6 @@ class UserCreationWithMetadataForm(UserCreationForm):
         }))
     
     
-    
-    
-
-
-
-
 class UsersMetadataForm(forms.ModelForm):
     username_field = forms.CharField(required=False, widget=forms.HiddenInput())  # Campo adicional opcional para capturar el nombre de usuario.
 
@@ -105,3 +102,77 @@ class UsersAcademyForm(forms.ModelForm):
             'jornada': '',
             'asignaturas_inscritas': '',
         }
+
+
+#--------- formularios de salidas
+
+
+
+class SalidaTerrenoForm(forms.ModelForm):
+    class Meta:
+        model = SalidaTerreno
+        fields = [
+            'estado', 'activo', 'numero_cuenta', 'semestre', 'anio', 'semana', 'diasemana', 'actividad',
+            'fecha_ingreso', 'fecha_termino', 'dias', 'noches', 'lugar_ejecucion', 'asignaturas', 'exp_aprendizaje',
+            'secciones', 'docentes_apoyo', 'num_salida', 'observaciones', 'semaforo'
+        ]
+        widgets = {
+            'estado': forms.Select(attrs={'class': 'form-select border-gray-300'}),
+            'activo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'numero_cuenta': forms.NumberInput(attrs={'class': 'form-control border-gray-300'}),
+            'semestre': forms.Select(attrs={'class': 'form-select border-gray-300'}),
+            'anio': forms.NumberInput(attrs={'class': 'form-control border-gray-300'}),
+            'semana': forms.NumberInput(attrs={'class': 'form-control border-gray-300'}),
+            'diasemana': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'actividad': forms.TextInput(attrs={'class': 'form-control border-gray-300'}),
+            'fecha_ingreso': forms.DateInput(attrs={'class': 'form-control border-gray-300', 'type': 'date'}),
+            'fecha_termino': forms.DateInput(attrs={'class': 'form-control border-gray-300', 'type': 'date'}),
+            'dias': forms.NumberInput(attrs={'class': 'form-control border-gray-300'}),
+            'noches': forms.NumberInput(attrs={'class': 'form-control border-gray-300'}),
+            'lugar_ejecucion': forms.TextInput(attrs={'class': 'form-control border-gray-300'}),
+            'asignaturas': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'exp_aprendizaje': forms.Select(attrs={'class': 'form-select border-gray-300'}),
+            'secciones': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'docentes_apoyo': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'num_salida': forms.Select(attrs={'class': 'form-select border-gray-300'}),
+            'observaciones': forms.Textarea(attrs={'class': 'form-control border-gray-300'}),
+            'semaforo': forms.Select(attrs={'class': 'form-select border-gray-300'}),
+        }
+        labels = {
+            'estado': '',
+            'activo': '',
+            'numero_cuenta': '',
+            'semestre': '',
+            'anio': '',
+            'semana': '',
+            'diasemana': '',
+            'actividad': '',
+            'fecha_ingreso': '',
+            'fecha_termino': '',
+            'dias': '',
+            'noches': '',
+            'lugar_ejecucion': '',
+            'asignaturas': '',
+            'exp_aprendizaje': '',
+            'secciones': '',
+            'docentes_apoyo': '',
+            'num_salida': '',
+            'observaciones': '',
+            'semaforo': '',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(SalidaTerrenoForm, self).__init__(*args, **kwargs)
+        self.fields['diasemana'].queryset = DiaSemana.objects.all().order_by('id')
+        self.fields['diasemana'].label_from_instance = lambda obj: obj.nombre
+        self.fields['asignaturas'].queryset = Asignatura.objects.all().order_by('semestre', 'nombre')
+        self.fields['docentes_apoyo'].queryset = UsersMetadata.objects.filter(perfil='D').order_by('nombres')
+
+
+
+  
+        
+        if self.instance and self.instance.fecha_ingreso:
+            self.fields['fecha_ingreso'].widget.attrs['value'] = self.instance.fecha_ingreso.strftime('%Y-%m-%d')
+        if self.instance and self.instance.fecha_termino:
+            self.fields['fecha_termino'].widget.attrs['value'] = self.instance.fecha_termino.strftime('%Y-%m-%d')

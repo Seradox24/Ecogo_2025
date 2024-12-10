@@ -55,7 +55,7 @@ class SalidaTerreno(models.Model):
     anio = models.PositiveIntegerField(validators=[MaxValueValidator(3000)], blank=True, null=True)
     semana = models.PositiveIntegerField(validators=[MaxValueValidator(3000)], blank=True, null=True)
     diasemana = models.ManyToManyField(DiaSemana, blank=True)
-    actividad = models.CharField(max_length=100, choices=ACTIVIDAD_CHOICES, blank=True, null=True, default='por_definir')
+    actividad = models.CharField(max_length=200, blank=True, null=True, default='por_definir')
     fecha_ingreso = models.DateField()
     fecha_termino = models.DateField()
     dias = models.PositiveIntegerField(validators=[MaxValueValidator(99)])

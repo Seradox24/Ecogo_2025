@@ -129,6 +129,9 @@ body {
   box-shadow: 10px 10px 0 #002857;
 }
 
+.sombra22 {
+  box-shadow: 10px 10px 0 #a6a7a8;
+}
 .sombra-chica {
   box-shadow: 5px 5px 0 #002857;
 }
@@ -150,6 +153,7 @@ body {
   background-color: #00A19C;
   color: #FFFCF5;
 }
+
 
 /* Responsive Tablet o inferior */
 @media (max-width: 768px) {
@@ -304,4 +308,20 @@ body {
 .borde-inf-15 {
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+.borde-left-15 {
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+}
+.borde-right-15 {
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
 }/*# sourceMappingURL=style.css.map */
+
+
+@layer utilities {
+  .table-scrollable {
+    overflow: auto;
+    max-height: 500px;
+  }
+}

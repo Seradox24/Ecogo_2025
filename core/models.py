@@ -88,7 +88,7 @@ class Asignatura(models.Model):
     semestre = models.IntegerField(choices=SEMESTRE_CHOICES, default=1)
 
     def __str__(self):
-        return f"{self.nombre} - Sigla {self.sigla} - Semestre {self.get_semestre_display()}"
+        return f"{self.nombre} - Sigla {self.sigla} - {self.get_semestre_display()}"
 
     class Meta:
         db_table = 'asignaturas'
@@ -109,7 +109,7 @@ class Seccion(models.Model):
     cupo = models.IntegerField(default=30)
 
     def __str__(self):
-        return f"{self.asignatura.nombre} - {self.nombre}"
+        return f"( {self.nombre} - {self.docente.usersmetadata.nombres} {self.docente.usersmetadata.ap_paterno})"
 
     class Meta:
         db_table = 'secciones'

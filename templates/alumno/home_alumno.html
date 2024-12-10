@@ -2,19 +2,245 @@
 {% block content %}
 {% load static %}
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<section class="px-5p py-50">
+   
+    <div class=" py-50">
+        <div class="py-20 px-5p w-100 borde-trazo-5 sombra">
+            <h1 class="texto-azul">Bienvenido Matias Inayao
+            </h1>
+        </div>
+    </div>
+    <div class="py-50">
+        <button type="button" class="p-2 borde-trazo-5 sombra-chica boton" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <p>Abrir Modal</p>
+        </button>
+    </div>    
+</section>
 
-{% if user.is_authenticated %}
-    <h1>Hola, {{ user.username }}</h1>
-    <p >Nombre de la tabla: User</p>
-{% else %}
-    <h1>Hola</h1>
-{% endif %}
 
-{% if user.is_authenticated %}
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-{% endif %}
+<!-- Quedé pillao respecto al triangulo superior -->
+<section class="px-5p py-50">
+    <div class="container-fluid mx-0 px-0">
+        <div class="row g-5 ">
+            <div class="col-md-6">
 
+                <div class="card-salidas borde-trazo-5 sombra position-relative">
+                    <div class="position-absolute z-3 pt-3 ps-3">
+                        <p class="texto-blanco">
+                            30 de septiembre - 3 de octubre
+                        </p>
+                        <p class="texto-blanco">
+                            Sede: Viña del Mar
+                        </p>
+                    </div>
+                    <img src="assets/img/img-salida-1.png" class="w-100 borde-sup-15 z-1">
+                    <div class="py-20 px-10 bg-azul">
+                        <div class="d-flex flex-row justify-content-between pb-10">
+                            <p class="texto-amarillo">Ecoturísmo</p>
+                            <p class="texto-amarillo">EC1937</p>
+                        </div>
+                        <h2 class="texto-blanco text-center">Ascenso al cerro la Campana</h2>
+                        
+                    </div>
+                    
+                    <div class="row g-0"> 
+                        <div class="col-3 bg-verde">
+                            <div class="py-10"></div>
+                        </div>
+                        <div class="col-9 bg-amarillo">
+                            <div class="py-10"></div>
+                        </div>
+                    </div>
+                    
+                    <a class="text-decoration-none row py-25" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <p class="texto-azul text-center alineacion-vertical texto-hover-verde">
+                            <span class="bold">Más Información </span><span class="ps-3 parrafo-grande"> ➜</span>
+                        </p>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="card-salidas borde-trazo-5 sombra position-relative">
+                    <div class="position-absolute z-3 pt-3 ps-3">
+                        <p class="texto-blanco">
+                            12 de octubre - 15 de octubre
+                        </p>
+                        <p class="texto-blanco">
+                            Sede: Valparaíso
+                        </p>
+                    </div>
+                    <img src="assets/img/img-salida-2.png" class="w-100 borde-sup-15 z-1">
+                    <div class="py-20 px-10 bg-azul">
+                        <div class="d-flex flex-row justify-content-between pb-10">
+                            <p class="texto-amarillo">Turismo ecológico</p>
+                            <p class="texto-amarillo">TE2853</p>
+                        </div>
+                        <h2 class="texto-blanco text-center">Observación de Fauna en Parque Tricao</h2>
+                        
+                    </div>
+                    
+                    <div class="row g-0"> 
+                        <div class="col-3 bg-verde">
+                            <div class="py-10"></div>
+                        </div>
+                        <div class="col-9 bg-amarillo">
+                            <div class="py-10"></div>
+                        </div>
+                    </div>
+                    
+                    <a class="text-decoration-none row py-25" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <p class="texto-azul text-center alineacion-vertical texto-hover-verde">
+                            <span class="bold">Más Información </span><span class="ps-3 parrafo-grande"> ➜</span>
+                        </p>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="card-salidas borde-trazo-5 sombra position-relative">
+                    <div class="position-absolute z-3 pt-3 ps-3">
+                        <p class="texto-blanco">
+                            30 de septiembre - 3 de octubre
+                        </p>
+                        <p class="texto-blanco">
+                            Sede: Viña del Mar
+                        </p>
+                    </div>
+                    <img src="assets/img/img-salida-1.png" class="w-100 borde-sup-15 z-1">
+                    <div class="py-20 px-10 bg-azul">
+                        <div class="d-flex flex-row justify-content-between pb-10">
+                            <p class="texto-amarillo">Ecoturísmo</p>
+                            <p class="texto-amarillo">EC1937</p>
+                        </div>
+                        <h2 class="texto-blanco text-center">Ascenso al cerro la Campana</h2>
+                        
+                    </div>
+                    
+                    <div class="row g-0"> 
+                        <div class="col-3 bg-verde">
+                            <div class="py-10"></div>
+                        </div>
+                        <div class="col-9 bg-amarillo">
+                            <div class="py-10"></div>
+                        </div>
+                    </div>
+                    
+                    <a class="text-decoration-none row py-25" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <p class="texto-azul text-center alineacion-vertical texto-hover-verde">
+                            <span class="bold">Más Información </span><span class="ps-3 parrafo-grande"> ➜</span>
+                        </p>
+                    </a>
+
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-blanco borde-trazo-5 sombra">
+            <div class="modal-header bg-azul">
+                <h2 class="modal-title texto-blanco text-center" id="exampleModalLabel">Ascenso al Cerro la Campana</h2>
+                <button type="button" class="texto-blanco btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body bg-blanco borde-inf-15">
+                <div class=" px-10">
+                    <div class="row py-10">
+                        <div class="col-4">
+                            <p class="texto-azul">Inicio:</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="texto-azul bold">30 de septiembre - 12:00 AM </p>
+                        </div>
+                    </div>
+
+                    <div class="row py-10">
+                        <div class="col-4">
+                            <p class="texto-azul">Término:</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="texto-azul bold">3 de octubre - 2:00 PM </p>
+                        </div>
+                    </div>
+
+                    <div class="row py-10">
+                        <div class="col-4">
+                            <p class="texto-azul">Lugar de Encuentro:</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="texto-azul bold">Sede de Valparaíso</p>
+                        </div>
+                    </div>
+
+                    <div class="row py-10">
+                        <div class="col-4">
+                            <p class="texto-azul">Destino:</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="texto-azul bold">Olmué, Región de Valparaíso</p>
+                        </div>
+                    </div>
+
+                    <div class="row py-10">
+                        <div class="col-4">
+                            <p class="texto-azul">Duración:</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="texto-azul bold">4 días</p>
+                        </div>
+                    </div>
+
+                    <div class="row py-10">
+                        <div class="col-4">
+                            <p class="texto-azul">Asignatura:</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="texto-azul bold">Ecoturismo - VJ3066</p>
+                        </div>
+                    </div>
+
+                    <div class="row py-10">
+                        <div class="col-4">
+                            <p class="texto-azul">Docente a cargo:</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="texto-azul bold">Daniela Candia</p>
+                        </div>
+                    </div>
+
+                    <div class="row py-10">
+                        <div class="col-4">
+                            <p class="texto-azul">Estado:</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="texto-azul bold">Confirmado</p>
+                        </div>
+                    </div>
+                    
+
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}

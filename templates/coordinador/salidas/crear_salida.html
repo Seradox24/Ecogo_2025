@@ -1,0 +1,141 @@
+{% extends '../../layout/index_C.html' %}
+{% load static %}
+{% block content %}
+{% load tailwind_filters %}
+
+
+
+
+<div class="mb-4 flex items-center">
+    <button class="btn btn-secondary flex items-center">
+      <img src="{% static 'botones/barrow.svg' %}" alt="Volver" class="h-24 mr-2">
+      <span class="mx-auto text-5xl text-center font-extrabold -mt-5">Volver</span>
+    </button>
+  </div>
+  
+    <div class="mb-4  ">
+      
+    <h1 class="mx-auto text-5xl text-center font-extrabold">Crear Salida a Terreno</h1>
+    </div>
+
+  
+    <form class="px-10 font-semibold " method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Formulario para crear usuario -->
+  
+       
+
+
+
+
+
+
+        <div class="card mb-4 borde-trazo-5 pt-2 text-cuscol2">
+            <div class="card-header font-semibold p-4">Información General</div>
+            <div class="card-body p-4">
+                <div class="mb-4">
+                    <label for="{{ form.estado.id_for_label }}" class="form-label">Estado</label>
+                    {{ form.estado|as_crispy_field }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.activo.id_for_label }}" class="form-label">Activo</label>
+                    {{ form.activo|as_crispy_field }}
+                </div>
+                <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="{{ form.numero_cuenta.id_for_label }}" class="form-label">Número de Cuenta</label>
+                        {{ form.numero_cuenta|as_crispy_field }}
+                    </div>
+                    <div>
+                        <label for="{{ form.semestre.id_for_label }}" class="form-label">Semestre</label>
+                        {{ form.semestre|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="{{ form.anio.id_for_label }}" class="form-label">Año</label>
+                        {{ form.anio|as_crispy_field }}
+                    </div>
+                    <div>
+                        <label for="{{ form.semana.id_for_label }}" class="form-label">Semana</label>
+                        {{ form.semana|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.diasemana.id_for_label }}" class="form-label">Días de la Semana</label>
+                    {{ form.diasemana }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.actividad.id_for_label }}" class="form-label">Actividad</label>
+                    {{ form.actividad|as_crispy_field }}
+                </div>
+                <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="{{ form.fecha_ingreso.id_for_label }}" class="form-label">Fecha de Inicio</label>
+                        {{ form.fecha_ingreso|as_crispy_field }}
+                    </div>
+                    <div>
+                        <label for="{{ form.fecha_termino.id_for_label }}" class="form-label">Fecha de Término</label>
+                        {{ form.fecha_termino|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="{{ form.dias.id_for_label }}" class="form-label">Días</label>
+                        {{ form.dias|as_crispy_field }}
+                    </div>
+                    <div>
+                        <label for="{{ form.noches.id_for_label }}" class="form-label">Noches</label>
+                        {{ form.noches|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.lugar_ejecucion.id_for_label }}" class="form-label">Lugar de Ejecución</label>
+                    {{ form.lugar_ejecucion|as_crispy_field }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.asignaturas.id_for_label }}" class="form-label">Asignaturas</label>
+                    {{ form.asignaturas|as_crispy_field }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.exp_aprendizaje.id_for_label }}" class="form-label">Experiencia de Aprendizaje</label>
+                    {{ form.exp_aprendizaje|as_crispy_field }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.secciones.id_for_label }}" class="form-label">Secciones</label>
+                    {{ form.secciones|as_crispy_field }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.docentes_apoyo.id_for_label }}" class="form-label">Docentes de Apoyo</label>
+                    {{ form.docentes_apoyo|as_crispy_field }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.num_salida.id_for_label }}" class="form-label">Número de Salida</label>
+                    {{ form.num_salida|as_crispy_field }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.observaciones.id_for_label }}" class="form-label">Observaciones</label>
+                    {{ form.observaciones|as_crispy_field }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.semaforo.id_for_label }}" class="form-label">Semáforo</label>
+                    {{ form.semaforo|as_crispy_field }}
+                </div>
+            </div>
+        </div>
+        <div class="relative flex justify-center py-10">
+                        
+            <button type="submit" class="bg-cuscol4 rounded-3xl boton sombra  border-4 border-cuscol2 text-cuscol2 font-extrabold text-lg py-2 px-4 w-3/4 relative">Crear</button>
+        </div>
+      
+          <!-- Botón para enviar el formulario -->
+          
+        </form>
+
+
+
+
+
+
+{% endblock %}

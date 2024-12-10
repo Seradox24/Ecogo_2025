@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'crispy_forms',
     'crispy_tailwind',
+    'widget_tweaks',
 ]
 
 
@@ -194,19 +195,20 @@ JAZZMIN_UI_TWEAKS = {
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "Backend Ejemplo 1",
+    "site_title": "Admin Ecogo",
 
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": "Backend Ejemplo 1",
+    "site_header": "Admin Ecogo",
 
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": "Ejemplo 1",
+    "site_brand": "Ecogo Backend",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "/images/logo.png",
+    "site_logo": "/images/elementos gráficos/logo-iniciar-sesion.webp",
+    
     "site_logo_classes": "img-circle",
-    "welcome_sign": format_html("<img src='/assets/images/logo.png'>"),
-    "copyright": "Desarrollado por <a href='https://www.tamila.cl/' target='_blank'>Tamila</a>",
+    #"welcome_sign": format_html("<img src='/images/elementos gráficos/logo-iniciar-sesion.webp'>"),
+    "copyright": "Desarrollado por Escuela de Turismo y Hospitalidad de Duoc UC- Sede Valparaíso ",
     "show_sidebar": True,
     "changeform_format": "horizontal_tabs",
     "user_avatar": None,
