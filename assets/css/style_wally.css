@@ -25,33 +25,41 @@
 }
 
 /*+++++++++++++++++++++++++++++++++Tipografía+++++++++++++++++++++++++++++++++*/
-h1 {
+@font-face {
+  font-family: "Montserrat";
+  src: url("../Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
+}
+.mi-h1 {
+  display: block;
   font-family: "Montserrat", sans-serif;
   font-size: 48px;
-  font-weight: 700;
+  font-weight: 600 !important;
   margin: 0% !important;
   line-height: 150% !important;
 }
 
-h2 {
+.mi-h2 {
+  display: block;
   font-family: "Montserrat", sans-serif;
   font-size: 36px;
-  font-weight: 700;
+  font-weight: 500 !important;
   margin: 0% !important;
   line-height: 150% !important;
 }
 
-h3 {
+.mi-h3 {
+  display: block;
   font-family: "Montserrat", sans-serif;
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 400 !important;
   margin: 0% !important;
   line-height: 150% !important;
 }
 
-p {
-  font-family: "Montserrat", sans-serif;
-  font-size: 20px;
+.mi-p {
+  display: block;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 18px;
   font-weight: 500;
   margin: 0% !important;
 }
@@ -73,6 +81,12 @@ p {
   color: #00A19C;
 }
 
+.texto-parrafo{
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0% !important;
+}
 /*Aparte*/
 .texto-hover-verde:hover {
   color: #00A19C;

@@ -11,6 +11,7 @@ from .forms import UserCreationWithMetadataForm, UsersMetadataForm, UsersAcademy
 # import de librerias listar salidas
 from coordinador.models import SalidaTerreno
 from .forms import SalidaTerrenoForm
+from django.shortcuts import get_object_or_404, redirect
 
 
 
@@ -152,11 +153,10 @@ def editar_salida(request, id):
     })
 
 # ----------------------------------------  Eliminar Salida  -----------------------------------------------------
-from django.shortcuts import get_object_or_404, redirect
 @login_required
 @Coordinador_required
-def eliminar_salida(request, id):
-    salida = get_object_or_404(SalidaTerreno, id=id)
-    salida.delete()
-    messages.success(request, f"La salida con ID {id} ha sido eliminada correctamente.")
-    return redirect('coordinador:listar_salida')
+def eliminar_salida(request, id): #obtiene el id de la salida
+    salida = get_object_or_404(SalidaTerreno, id=id) #obtiene la salida con el id obtenido
+    salida.delete() #elimina la salida
+    messages.success(request, f"La salida : {salida.actividad} - {salida.numero_cuenta}  ha sido eliminada correctamente.") #mensaje de confirmacion atravez de una variable que es leida por sweet alert y ejecutada 
+    return redirect('coordinador:listar_salida') #redirecciona a la lista de salidas

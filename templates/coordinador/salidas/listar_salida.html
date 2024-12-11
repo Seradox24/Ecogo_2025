@@ -3,54 +3,15 @@
 {% block content %}
 {% load tailwind_filters %}
 
-{% comment %} <div class="mb-4 flex items-center py-14">
-    <button class="btn btn-secondary flex items-center">
-      <img src="{% static 'botones/barrow.svg' %}" alt="Volver" class="h-6 mr-2 "> <!-- Ajustar el tamaño de la imagen para que sea más flexible -->
-      <span class="text-2xl sm:text-3xl font-extrabold">Volver</span> <!-- Texto adaptativo para pantallas pequeñas -->
-    </button>
-</div> {% endcomment %}
 
 
 
-<script>
-    function confirmDelete(id, url) {
-        Swal.fire({
-            html: `
-                <div class="bg-white shadow dark:bg-gray-700  rounded-3xl border-r-8 border-b-8 border-cuscol2">
-                    <h2 class="bg-cuscol2 text-white text-center rounded-t-3xl py-3 ">¿Estás seguro?</h2>
-                            <button type="button" id="confirmNo" class="modal-close absolute top-6 end-16 text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-cuscol1 dark:hover:text-white">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                    <p class="text-gray-600 mt-2 bg-white ">La salida con ID <strong>${id}</strong> será eliminada.</p>
-                    <div class="flex justify-center mt-4">
-                        <button id="confirmYes" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2">
-                            Confirmar
-                        </button>
-                        <button id="confirmNo" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
-                            Cancelar
-                        </button>
-                    </div>
-                </div>
-            `,
-            showConfirmButton: false,
-            customClass: {
-                popup: 'bg-transparent shadow-none',
-                container: 'bg-black bg-opacity-50 backdrop-blur-md',
-            },
-            didRender: () => {
-                document.getElementById('confirmYes').addEventListener('click', () => {
-                    window.location.href = url; // Redirige a la URL de eliminación
-                });
-                document.getElementById('confirmNo').addEventListener('click', () => {
-                    Swal.close(); // Cierra el SweetAlert
-                });
-            }
-        });
-    }
-</script>
+<div class="mb-4 flex items-center">
+    <a href="{% url 'coordinador:listar_salida' %}" class="btn btn-secondary flex items-center">
+        <img src="{% static 'botones/barrow.svg' %}" alt="Volver" class="h-20 mr-2">
+        <h2 class="mx-auto text-center -mt-5">Volver</h2>
+    </a>
+</div>
 
 
 
@@ -59,13 +20,13 @@
 
 
 
-<h1 class="text-3xl py-10 sm:text-5xl font-extrabold mb-4 md:mb-0 text-center md:text-center w-full md:w-auto">Salidas a terreno</h1>
+<h1 class=" py-10 sm:text-5xl mb-4 md:mb-0 text-center md:text-center w-full md:w-auto">Salidas a terreno</h1>
 
 <div class="mb-4 flex flex-col items-center md:flex-row md:items-center md:justify-between px-4">
    
     
     <div class="md:ml-auto">
-        <a href="{% url 'coordinador:crear_salida' %}" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base">Agregar nueva salida
+        <a href="{% url 'coordinador:crear_salida' %}" class="boton borde-trazo-3 px-6 py-2 texto-parrafo">Agregar nueva salida
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
@@ -73,122 +34,16 @@
     </div>
 </div>
 
-  
-<!-- Modal template that will be cloned for each salida -->
-<!-- Modal template that will be cloned for each salida -->
-<div id="popup-modal-template" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full hidden">
-    <div class="relative p-4 w-full max-w-md max-h-full mx-auto mt-20">
-        <div class="relative bg-white shadow dark:bg-gray-700  rounded-3xl border-r-8 border-b-8 border-cuscol2">
-            <p class="bg-cuscol2 text-white text-center rounded-t-3xl py-3">¿Estás segur@?</p>
-            <button type="button" class="modal-close absolute top-2 end-2.5 text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-cuscol1 dark:hover:text-white">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                </svg>
-                <span class="sr-only">Close modal</span>
-            </button>
-            <div class="p-4 md:p-5 text-center bg-white rounded-b-xl">
-                <svg class="mx-auto mb-4 text-cuscol1 w-72 h-64 dark:text-cuscol1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6v4m0 4h0"/>
-                </svg>
-                <h3 class="mb-5 pb-5 text-lg font-normal text-cuscol2 dark:text-cuscol2">Esta acción no se puede deshacer (ID: <span class="modal-salida-id"></span>)</h3>
-                <div class="flex flex-col sm:flex-row justify-center gap-3">
-                    <a href="{% url 'coordinador:eliminar_salida' 3 %}" data-salida-id="" class="modal-accept w-full sm:w-auto boton borde-trazo-5 px-5 text-sm font-medium py-2.5">
-                        Aceptar
-                    </a>
-                    <button class="modal-close w-full sm:w-auto rounded-xl bg-gray-400 hover:bg-cuscol2 text-white borde-trazo-5 text-sm font-medium px-5 py-2.5 hover:text-white">
-                        Cancelar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="fixed inset-0 bg-black bg-opacity-50 -z-10"></div>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const modalTemplate = document.getElementById('popup-modal-template');
-    const modalButtons = document.querySelectorAll('[data-modal-target]');
-
-    modalButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const salidaId = button.getAttribute('data-modal-target').split('-')[2];
-            const modal = modalTemplate.cloneNode(true);
-            modal.id = `popup-modal-${salidaId}`;
-            modal.classList.remove('hidden');
-            
-            // Set the salida ID on both the accept button and the h3 text
-            modal.querySelector('.modal-accept').setAttribute('data-salida-id', salidaId);
-            modal.querySelector('.modal-salida-id').textContent = salidaId;
-            
-            document.body.appendChild(modal);
-
-            // Add click handlers for the cloned modal
-            modal.querySelector('.modal-close').addEventListener('click', () => {
-                modal.remove();
-            });
-
-            modal.querySelector('.modal-accept').addEventListener('click', async () => {
-                // Here you can add the delete logic using the salida ID
-                const salidaIdToDelete = modal.querySelector('.modal-accept').getAttribute('data-salida-id');
-                try {
-                    const response = await fetch(`/coordinador/eliminar_salida/${salidaIdToDelete}/`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': getCookie('csrftoken'),
-                        },
-                    });
-                    if (response.ok) {
-                        // Redirect or refresh page after successful deletion
-                        window.location.reload();
-                    } else {
-                        console.error('Error al eliminar la salida');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-                modal.remove();
-            });
-
-            // Close on background click
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-        });
-    });
-
-    // Helper function to get CSRF token
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-});
-</script>
 
 
 
 
-
-
+<!-- Responsive table -->
 
 
 <ul class="max-w-2xl mx-auto my-20  divide-y  shadow-xl shadow-cuscol2 rounded-xl border-cuscol2 border-4 sm:hidden ">
     {% for salida in salidas %}
 
-   
-    
     <li>
         <details class="group bg-cuscol2 text-cuscol4">
             <summary class="flex items-center gap-3 px-4 py-3 font-medium marker:content-none hover:cursor-pointer">
@@ -200,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </svg>
                 <div class="flex-1 relative text-center">
                     <!-- Span content -->
-                    <span class="block mb-2">{{ salida.actividad }} - {{ salida.numero_cuenta }} -  {{ salida.id }} </span>
+                    <span class="block mb-2 texto-parrafo">{{ salida.actividad }} - {{ salida.numero_cuenta }} -  {{ salida.id }} </span>
                     
                     <!-- Bar container -->
                     <div class="flex w-full">
@@ -220,15 +75,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="bg-white max-w-2xl shadow overflow-hidden sm:rounded-lg">
                     <div class="px-4 py-5 sm:px-6 ">
                         <div class="flex flex-col text-cuscol2 sm:flex-row flex-wrap gap-4 ">
-                            <a href="{% url 'coordinador:editar_salida' salida.id %}" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center">Editar </a>
-                            <a href="#" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center">Notificar</a>
-                            <a href="#" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center">Agregar documentos</a>
-                            <button data-modal-target="popup-modal-{{ salida.id }}" data-modal-toggle="popup-modal-{{ salida.id }}" class="rounded-xl bg-gray-400 hover:bg-cuscol2 text-white borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center" type="button">
-                                Eliminar
+                            <a href="{% url 'coordinador:editar_salida' salida.id %}" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center"><p>Editar</p></a>
+                            <a href="#" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center"><p>Notificar</p></a>
+                            <a href="#" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center"><p>Agregar documentos</p></a>
+                            <button  onclick="confirmDelete('{{ salida.actividad }}', '{% url 'coordinador:eliminar_salida' salida.id %}')" class="rounded-xl bg-gray-400 hover:bg-cuscol2 text-white borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center" type="button">
+                                <p>Eliminar</p>
                             </button>
                         </div>
                         <h3 class="text-lg leading-6 font-medium text-gray-900 pt-10">
-                            Detalle de salida 
+                            <p>Detalle de salida </p>
                         </h3>
                         <p class="mt-1 max-w-2xl text-sm text-gray-500">
                             {{ salida.actividad }}
@@ -239,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <dl class="">
                             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-y-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500 ">
-                                    Viabilidad
+                                    <p>Viabilidad</p>
                                 </dt>
                                 <dd class="mt-10 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                     <span class="ml-2  px-7 py-4 rounded-full text-white 
@@ -261,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    Visible?
+                                    <p>Visible</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex justify-center">
                                         <span class="text-center font-extrabold text-3xl
@@ -286,146 +141,146 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    Situación
+                                    <p>Situación</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 2">
-                                    {{ salida.estado }}
+                                    <p>{{ salida.estado }}</p>
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    Nº Cuenta 
+                                    <p>Nº Cuenta </p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ salida.numero_cuenta }}
-                                </dd>
-                            </div>
-
-
-                            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
-                                <dt class="text-sm font-medium text-gray-500">
-                                    Semestre
-                                </dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ salida.get_semestre_display }}
+                                    <p>{{ salida.numero_cuenta }}</p>
                                 </dd>
                             </div>
 
+
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    Año
+                                    <p>Semestre</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ salida.anio }}
+                                    <p>{{ salida.get_semestre_display }}</p>
+                                </dd>
+                            </div>
+
+                            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    <p>Año</p>
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <p>{{ salida.anio }}</p>
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    Semana
+                                    <p>Semana</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ salida.semana }}
+                                    <p>{{ salida.semana }}</p>
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    Dias Semana
+                                    <p>Dias Semana</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {% if salida.diasemana.all %}
+                                    <p>{% if salida.diasemana.all %}
                                     {% for dia in salida.diasemana.all %}
                                         {{ dia.nombre }}{% if not forloop.last %}, {% endif %}
                                     {% endfor %}
                                 {% else %}
                                     Por definir
-                                {% endif %}
+                                {% endif %}</p>
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    fecha inicio
+                                    <p>Fecha inicio</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ salida.fecha_ingreso }}
+                                    <p>{{ salida.fecha_ingreso }}</p>
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    fecha termino
+                                    <p>Fecha termino</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ salida.fecha_termino }}
+                                    <p>{{ salida.fecha_termino }}</p>
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    DÍAS
+                                    <p>Días</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ salida.dias }}
+                                    <p>{{ salida.dias }}</p>
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    NOCHES
+                                    <p>Noches</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ salida.noches }}
+                                    <p>{{ salida.noches }}</p>
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    Lugar de ejecución
+                                    <p>Lugar de ejecución</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ salida.lugar_ejecucion }}
+                                    <p>{{ salida.lugar_ejecucion }}</p>
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    ASIGNATURAS
+                                    <p>Asignaturas</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                     {% for asignatura in salida.asignaturas.all %}
                                     <span class="inline-block bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs">
-                                        {{ asignatura.nombre }} - {{ asignatura.sigla }}
+                                        <p>{{ asignatura.nombre }} - {{ asignatura.sigla }}</p>
                                     </span>
                                 {% empty %}
-                                    <span class="text-gray-400">No asignadas</span>
+                                    <span class="text-gray-400"><p>No asignadas</p></span>
                                 {% endfor %}
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    EXPERIENCIA  DE APRENDIZAJE
+                                    <p>EXPERIENCIA  DE APRENDIZAJE</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ salida.exp_aprendizaje }}
+                                    <p>{{ salida.exp_aprendizaje }}</p>
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    Q ALUMNOS
+                                    <p>Alumnos</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                    {{ salida.total_inscritos }}
+                                    <p>{{ salida.total_inscritos }}</p>
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    SECCIONES POR DOCENTE
+                                    <p>Secciones por docente</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                     {% for seccion in salida.secciones.all %}
-                                        {{ seccion }}{% if not forloop.last %}, {% endif %}
+                                        <p>{{ seccion }}</p>{% if not forloop.last %}, {% endif %}
                                     {% empty %}
-                                        Sin secciones
+                                        <p>Sin secciones</p>
                                     {% endfor %}
                                 </dd>
                             </div>
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 border-b-2 border-cuscol2">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    DOCENTES TITULARES
+                                    <p>DOCENTES TITULARES</p>
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                     {% for asignatura in salida.asignaturas.all %}
@@ -433,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     ({{ asignatura.coordinador.usersmetadata.nombres|default:"Sin nombre" }} {{ asignatura.coordinador.usersmetadata.ap_paterno|default:"Sin apellido" }} - {{ asignatura.nombre }}) {% if not forloop.last %}, {% endif %}
                                         
                                     {% empty %}
-                                        <span class="text-gray-400">No asignadas</span>
+                                        <span class="text-gray-400"><p>No asignadas</p></span>
                                     {% endfor %}
                                 </dd>
                             </div>
@@ -515,11 +370,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span>Notificar</span>
                     
                 </button>
-                <button onclick="confirmDelete('{{ salida.id }}', '{% url 'coordinador:eliminar_salida' salida.id %}')" class="boton borde-trazo-3 px-6 mx-2 py-2 text-sm sm:text-base flex items-center">
+                <button  class="boton borde-trazo-3 px-6 mx-2 py-2 text-sm sm:text-base flex items-center">
                     <span>Agregar documentos</span>
                     
                 </button>
-                <button data-modal-target="popup-modal-{{ salida.id }}" data-modal-toggle="popup-modal-{{ salida.id }}" class="rounded-xl bg-gray-400 hover:bg-cuscol2 text-white borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center" type="button">
+                <button onclick="confirmDelete('{{ salida.actividad }}', '{% url 'coordinador:eliminar_salida' salida.id %}')" class="rounded-xl bg-gray-400 hover:bg-cuscol2 text-white borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center" type="button">
                     Eliminar
                 </button>
                 </div>
@@ -679,12 +534,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td class="border-cuscol2 border-b-4 border-r-4 bg-white px-4 py-2 text-cuscol2 min-w-[100px] whitespace-normal">{{ salida.num_salida }}</td>
                     <td class="rounded-br-2xl border-cuscol2 border-b-4 border-r-4 bg-white px-4 py-2 text-cuscol2 min-w-[200px] whitespace-normal">{{ salida.observaciones }}</td>
                 </tr>
+                
             </tbody>
+            
         </table>
          {% comment %} tabla end {% endcomment %}
     </div>
+    {% empty %}
+    <div class="bg-gray-500 px-10 my-10 ">
+        <p class="text-center text-white py-4 ">No hay salidas registradas.</p>
+    </div>
+
+    
     {% endfor %}
 
+{% if salidas%}
     <!-- Paginación -->
     <div class="mt-6 flex justify-center">
         <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
@@ -705,9 +569,95 @@ document.addEventListener('DOMContentLoaded', function() {
         </nav>
     </div>
 </div>
+{% else %}
+
+
+{% endif %}
 
 
 
- 
+<script>
+  // Configurar el Toast
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    }
+  });
+
+  // Mostrar mensajes de Django en Toast
+  {% if messages %}
+  {% for message in messages %}
+    Toast.fire({
+      icon: "{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% else %}info{% endif %}",
+      title: "{{ message }}"
+    });
+  {% endfor %}
+  {% endif %}
+
+  // Evento para el botón manual (prueba)
+  document.getElementById("show-toast").addEventListener("click", () => {
+    Toast.fire({
+      icon: "success",
+      title: "¡Este es un Toast de prueba!"
+    });
+  });
+</script>
+
+
+<script>
+    function confirmDelete(id, url) {
+        Swal.fire({
+            html: `
+                <div class="bg-white shadow dark:bg-white  rounded-3xl border-r-8 border-b-8 border-cuscol2">
+                    <h2 class="bg-cuscol2 text-white text-center rounded-t-2xl py-3 ">¿Estás seguro?</h2>
+                            <button type="button" id="confirmNo" class="modal-close absolute top-6 end-16 text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-cuscol1 dark:hover:text-white">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <svg class="mx-auto mb-4 text-cuscol1 w-72 h-64 dark:text-cuscol1 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6v4m0 4h0"/>
+                    </svg>
+                    <p class="text-gray-600 mt-2 bg-white ">La salida <strong>${id}</strong> será eliminada.</p>
+                    <p class="text-gray-600 mt-2 bg-white ">Esta acción no se puede deshacer</p>
+                    <div class="flex justify-center my-4 ">
+                    
+
+
+                        <button id="confirmYes" class="w-full mx-4 sm:w-auto boton borde-trazo-5 px-5 text-sm font-medium py-2.5">
+                            <p>Confirmar</p>
+                        </button>
+                        <button id="confirmNo" class="w-full sm:w-auto rounded-xl bg-gray-400 hover:bg-cuscol2 text-white borde-trazo-5 text-sm font-medium px-5 py-2.5 hover:text-white">
+                            <p>Cancelar</p>
+                        </button>
+                    </div>
+                </div>
+            `,
+            showConfirmButton: false,
+            customClass: {
+                popup: 'bg-transparent shadow-none',
+                container: 'bg-black bg-opacity-50 backdrop-blur-md',
+            },
+            didRender: () => {
+                document.getElementById('confirmYes').addEventListener('click', () => {
+                    window.location.href = url; // Redirige a la URL de eliminación
+                });
+                document.getElementById('confirmNo').addEventListener('click', () => {
+                    Swal.close(); // Cierra el SweetAlert
+                });
+            }
+        });
+    }
+
+</script>
+
+
     
 {% endblock %}
