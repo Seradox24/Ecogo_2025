@@ -102,14 +102,17 @@
 
 /* Responsive Tablet o inferior */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 28px;
+  .mi-h1 {
+    font-size: 32px !important;
   }
-  h2 {
-    font-size: 20px;
+  .mi-h2 {
+    font-size: 28px !important;
   }
-  p {
-    font-size: 18px;
+  .mi-h3 {
+    font-size: 20px !important;
+  }
+  .mi-p {
+    font-size: 18px !important;
     font-weight: 600;
   }
 }
@@ -313,7 +316,10 @@ body {
 .borde-der-0 {
   border-bottom-right-radius: 0px !important;
 }
-
+.borde-sup-20 {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
 .borde-sup-15 {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
@@ -322,6 +328,10 @@ body {
 .borde-inf-15 {
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+.borde-inf-20 {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 .borde-left-15 {
   border-bottom-left-radius: 15px;

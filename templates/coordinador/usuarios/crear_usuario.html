@@ -121,6 +121,16 @@
         <label for="{{ metadata_form.foto.id_for_label }}" class="form-label"></label>
         {{ metadata_form.foto|as_crispy_field }}
         </div>
+
+        <!-- Campo para contacto emergencia -->
+        <div class="w-full md:col-span-2">
+          <label for="{{ metadata_form.conctacto_sostenedor.id_for_label }}" class="form-label">Contacto Sostenedor</label>
+          {{ metadata_form.conctacto_sostenedor|as_crispy_field }}
+          </div>
+
+
+
+        
     
       </div>
     
@@ -140,15 +150,25 @@
           <label for="{{ academy_form.semestre.id_for_label }}" class="form-label ">Semestre académico</label>
           {{ academy_form.semestre|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
         </div>
-        <div class="mb-4">
-          <label for="{{ academy_form.sede.id_for_label }}" class="form-label">Sede</label>
-          {{ academy_form.sede|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+        
+
+        <div>
+          <label for="{{ academy_form.cod_carrera.id_for_label }}" class="form-label">Codigo de la carrera</label>
+          {{ academy_form.cod_carrera|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
         </div>
+
         
           <div>
             <label for="{{ academy_form.nom_carrera.id_for_label }}" class="form-label">Nombre de la carrera</label>
             {{ academy_form.nom_carrera|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
           </div>
+
+          <div class="mb-4">
+            <label for="{{ academy_form.sede.id_for_label }}" class="form-label">Sede</label>
+            {{ academy_form.sede|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+
+          
           <div>
             <label for="{{ academy_form.modalidad.id_for_label }}" class="form-label">Modalidad</label>
             {{ academy_form.modalidad|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
@@ -157,6 +177,46 @@
             <label for="{{ academy_form.jornada.id_for_label }}" class="form-label">Jornada</label>
             {{ academy_form.jornada|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
           </div>
+
+          <div>
+            <label for="{{ academy_form.anno_ingreso.id_for_label }}" class="form-label"> Año de Ingreso </label>
+            {{ academy_form.anno_ingreso|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+
+          <div>
+            <label for="{{ academy_form.tipo_ingreso.id_for_label }}" class="form-label"> Tipo de Ingreso </label>
+            {{ academy_form.tipo_ingreso|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+
+          <div>
+            <label for="{{ academy_form.subtipo_ingreso.id_for_label }}" class="form-label">Subtipo de Ingreso</label>
+            {{ academy_form.subtipo_ingreso|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+
+          <div>
+            <label for="{{ academy_form.username_field.id_for_label }}" class="form-label">Username</label>
+            {{ academy_form.username_field|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+
+          <div>
+            <label for="{{ academy_form.correoduoc.id_for_label }}" class="form-label">Correo Duoc</label>
+            {{ academy_form.correoduoc|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+
+          <div class="w-full md:col-span-2">
+            <label for="{{ academy_form.correo.id_for_label }}" class="form-label">Correo Personal</label>
+            {{ academy_form.correo|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
+
+
+
+
+
+
+
+
+
+
           
         </div>
         <div class="mb-4">

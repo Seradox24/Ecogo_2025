@@ -80,7 +80,6 @@ class UsersAcademy(models.Model):
     correoduoc = models.EmailField(max_length=100, blank=True, null=True)
     correo = models.EmailField(max_length=100, blank=True, null=True)
     sede = models.CharField(max_length=100, blank=True, null=True)
-    nom_carrera = models.CharField(max_length=100, blank=True, null=True)
     modalidad = models.CharField(max_length=100, blank=True, null=True)
     jornada = models.CharField(max_length=100, blank=True, null=True)
     asignaturas_inscritas = models.ManyToManyField('Asignatura', related_name='alumnos_inscritos', blank=True)

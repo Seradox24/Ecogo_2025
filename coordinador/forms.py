@@ -48,7 +48,7 @@ class UsersMetadataForm(forms.ModelForm):
         model = UsersMetadata
         fields = [
             'sexo', 'perfil', 'rut', 'nombres', 'ap_paterno', 'ap_materno',
-            'fnacimiento', 'estado_civil', 'direccion', 'numero', 'celular', 'foto'
+            'fnacimiento', 'estado_civil', 'direccion', 'numero', 'celular', 'foto', 'conctacto_sostenedor'
         ]
         widgets = {
             'sexo': forms.Select(attrs={'class': 'form-select rounded border-gray-300'}),  # Campo con opciones definidas en `SEXO_CHOICES`.
@@ -63,6 +63,7 @@ class UsersMetadataForm(forms.ModelForm):
             'numero': forms.TextInput(attrs={'class': 'form-control border-gray-300', 'placeholder': 'Número de casa/departamento'}),
             'celular': forms.TextInput(attrs={'class': 'form-control border-gray-300', 'placeholder': '+56912345678'}),
             'foto': forms.ClearableFileInput(attrs={'class': 'form-control border-gray-300'}),
+            'conctacto_sostenedor': forms.TextInput(attrs={'class': 'form-control border-gray-300', 'placeholder': 'Numero de contacto de emergencia o sostenedor'}),
         }
         labels = {
             'sexo': '',
@@ -77,14 +78,18 @@ class UsersMetadataForm(forms.ModelForm):
             'numero': '',
             'celular': '',
             'foto': '',
+            #
+            'conctacto_sostenedor': '',
         }
 
+#--------- formularios de usuarios academy
 
 class UsersAcademyForm(forms.ModelForm):
     class Meta:
         model = UsersAcademy
         fields = [
-            'semestre', 'sede', 'nom_carrera', 'modalidad', 'jornada', 'asignaturas_inscritas'
+            'semestre', 'sede', 'nom_carrera', 'modalidad', 'jornada', 'asignaturas_inscritas','anno_ingreso','cod_carrera','tipo_ingreso',
+            'subtipo_ingreso', 'username_field', 'correoduoc', 'correo'
         ]
         widgets = {
             'semestre': forms.Select(attrs={'class': 'form-select'}),  # Campo con opciones definidas en `SEMESTRE_CHOICES`.
@@ -93,6 +98,13 @@ class UsersAcademyForm(forms.ModelForm):
             'modalidad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Modalidad (Ej: Presencial)'}),
             'jornada': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Jornada (Ej: Diurna, Vespertina)'}),
             'asignaturas_inscritas': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'anno_ingreso': forms.Select(attrs={'class': 'form-select'}),  # Campo con opciones definidas en `SEMESTRE_CHOICES`.
+            'cod_carrera': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Código de la carrera'}),
+            'tipo_ingreso': forms.Select(attrs={'class': 'form-select'}),  # Campo con opciones definidas en `TIPOINGRE_CHOICES`.
+            'subtipo_ingreso': forms.Select(attrs={'class': 'form-select'}),  # Campo con opciones definidas en `SUBTIPO_INGRE_CHOICES`.
+            'username_field': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de usuario'}),
+            'correoduoc': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Correo DUOC'}),
+            'correo': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Correo personal'}),
         }
         labels = {
             'semestre': '',
@@ -101,7 +113,19 @@ class UsersAcademyForm(forms.ModelForm):
             'modalidad': '',
             'jornada': '',
             'asignaturas_inscritas': '',
+            #
+            'anno_ingreso': '',
+            'cod_carrera': '',
+            'tipo_ingreso': '',
+            'subtipo_ingreso': '',
+            'username_field': '',
+            'correoduoc': '',
+            'correo': '',
         }
+
+
+
+
 
 
 #--------- formularios de salidas
