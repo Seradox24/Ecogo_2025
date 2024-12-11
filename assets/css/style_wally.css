@@ -270,12 +270,12 @@ body {
 /*Bordes Cerrados*/
 .borde-trazo-5 {
   border: #002857 5px solid !important;
-  border-radius: 20px !important;
+  border-radius: 30px !important;
 }
 
 .borde-trazo-3 {
   border: #002857 3px solid;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 .borde-trazo-1 {
@@ -330,7 +330,11 @@ body {
 .borde-right-15 {
   border-bottom-right-radius: 15px;
   border-top-right-radius: 15px;
-}/*# sourceMappingURL=style.css.map */
+}
+.borde-recto-der{
+  border-bottom-right-radius: 0px !important;
+}
+/*# sourceMappingURL=style.css.map */
 
 
 @layer utilities {

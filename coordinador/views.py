@@ -160,3 +160,9 @@ def eliminar_salida(request, id): #obtiene el id de la salida
     salida.delete() #elimina la salida
     messages.success(request, f"La salida : {salida.actividad} - {salida.numero_cuenta}  ha sido eliminada correctamente.") #mensaje de confirmacion atravez de una variable que es leida por sweet alert y ejecutada 
     return redirect('coordinador:listar_salida') #redirecciona a la lista de salidas
+
+
+
+#Asignaturas ------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# ----------------------------------------  Listar Salida  -----------------------------------------------------

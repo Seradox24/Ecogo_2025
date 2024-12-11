@@ -31,6 +31,9 @@ class UsersMetadata(models.Model):
     direccion = models.CharField(max_length=100, blank=True, null=True)
     numero = models.CharField(max_length=100, blank=True, null=True)
     celular = models.CharField(max_length=100, blank=True, null=True)
+    conctacto_sostenedor = models.CharField(max_length=100, blank=True, null=True)    
+    
+    
     
 
     def __str__(self):
@@ -54,8 +57,28 @@ class UsersAcademy(models.Model):
         (8, '8 Semestre'),
     ]
 
+    TIPOINGRE_CHOICES = [
+        ('ALUMNO DE INICIO', 'ALUMNO DE INICIO'),
+        ('ALUMNO DE ADMISIÓN ESPECIAL', 'ALUMNO DE ADMISIÓN ESPECIAL'),
+    ]
+
+    SUBTIPO_INGRE_CHOICES = [
+        ('REGULAR', 'REGULAR'),
+        ('INTERNO', 'INTERNO'),
+        ('RAP-IES', 'RAP-IES'),
+        ('otro', 'otro'),
+    ]
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='usersAcademy')
+    anno_ingreso = models.IntegerField(blank=True, null=True, choices=[(r, r) for r in range(2015, 2050)], verbose_name="Año de Ingreso")
     semestre = models.IntegerField(choices=SEMESTRE_CHOICES, blank=True, null=True)
+    cod_carrera = models.CharField(max_length=100, blank=True, null=True)
+    nom_carrera = models.CharField(max_length=120, blank=True, null=True)
+    tipo_ingreso = models.CharField(choices=TIPOINGRE_CHOICES, max_length=100, blank=True, null=True)
+    subtipo_ingreso = models.CharField(choices=SUBTIPO_INGRE_CHOICES, max_length=100, blank=True, null=True)
+    username_field = models.CharField(max_length=100, blank=True, null=True)
+    correoduoc = models.EmailField(max_length=100, blank=True, null=True)
+    correo = models.EmailField(max_length=100, blank=True, null=True)
     sede = models.CharField(max_length=100, blank=True, null=True)
     nom_carrera = models.CharField(max_length=100, blank=True, null=True)
     modalidad = models.CharField(max_length=100, blank=True, null=True)
