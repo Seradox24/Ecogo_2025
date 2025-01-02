@@ -46,7 +46,7 @@
 <div class="container  py-10 mx-auto">
     <!-- Acordeón: Todas las Asignaturas -->
     <div class="mb-8 md:-mx-28 border border-gray-200 rounded-2xl shadow-md">
-        <button class="w-full bg-cuscol2 text-white text-center px-4 py-2  text-3xl font-bold rounded-t-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        <button class="w-full bg-cuscol2 text-white text-center px-4 py-2 text-3xl font-bold rounded-t-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onclick="toggleAccordion('todas-asignaturas')">
             Todas las Asignaturas
         </button>
@@ -57,8 +57,8 @@
         <div id="todas-asignaturas" class="hidden">
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {% for asignatura in asignaturas %}
-                <div class="bg-white shadow-md rounded-lg p-4">
-                    <h3 class="text-lg font-semibold text-gray-800">{{ asignatura.nombre }}</h3>
+                <div class="bg-white shadow-md rounded-lg p-4 border border-gray-300 hover:border-gray-400">
+                    <h3 class="text-lg font-semibold text-gray-800 line-clamp-2">{{ asignatura.nombre }}</h3>
                     <p class="text-sm text-gray-600">Sigla: {{ asignatura.sigla }}</p>
                     <p class="text-sm text-gray-600">Semestre: {{ asignatura.get_semestre_display }}</p>
                     <p class="text-sm text-gray-600">Coordinador: 
@@ -75,11 +75,12 @@
             </div>
         </div>
     </div>
+    
 
     <!-- Acordeón: Asignaturas por semestre -->
     <div>
         {% for semestre, asignaturas_semestre in asignaturas_por_semestre.items %}
-        <div class="mb-4 md:-mx-28  border border-gray-200 rounded-2xl shadow-md ">
+        <div class="mb-4 md:-mx-28  border  border-gray-300 rounded-2xl shadow-md   hover:border-gray-400">
             <button class="w-full bg-cuscol2 text-white text-center px-0 py-2 text-3xl font-bold rounded-t-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     onclick="toggleAccordion('semestre-{{ semestre }}')">
                 Semestre {{ semestre }}
@@ -92,8 +93,8 @@
             <div id="semestre-{{ semestre }}" class="hidden">
                 <div class="p-4 ">
                     {% for asignatura in asignaturas_semestre %}
-                    <div class="bg-white shadow-md rounded-lg p-4 mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                        <div>
+                    <div class="bg-white shadow-md rounded-lg p-4 mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between border  border-gray-300 hover:border-gray-500 ">
+                        <div class="">
                             <h3 class="text-lg font-semibold text-gray-800">{{ asignatura.nombre }}</h3>
                             <p class="text-sm text-gray-600">Sigla: {{ asignatura.sigla }}</p>
                             <p class="text-sm text-gray-600">Coordinador: 
