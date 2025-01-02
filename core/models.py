@@ -141,6 +141,9 @@ class Seccion(models.Model):
     def espacios_disponibles(self):
         return self.cupo - self.inscripciones.count()
     
+    def cantidad_alumnos(self):
+        return self.inscripciones.count()
+    
   
 
 class Inscripcion(models.Model):

@@ -28,24 +28,53 @@ def home_coordinador(request):
         total_salidas = SalidaTerreno.objects.count()
         salidas_activas = SalidaTerreno.objects.filter(activo=True, estado='POR_EJECUTAR')
         total_asignaturas = Asignatura.objects.count()
-        total_secciones = Seccion.objects.count()
-        # Obtener asignaturas activas y el conteo de secciones
-        asignaturas_activas = {}
-        secciones_activas = {}
-        for salida in salidas_activas:
-            for asignatura in salida.asignaturas.all():
-                if asignatura not in asignaturas_activas:
-                    asignaturas_activas[asignatura] = 0
-                asignaturas_activas[asignatura] += salida.secciones.filter(asignatura=asignatura).count()
-                for seccion in salida.secciones.filter(asignatura=asignatura):
-                    if seccion not in secciones_activas:
-                        secciones_activas[seccion] = 0
-                    secciones_activas[seccion] += Inscripcion.objects.filter(seccion=seccion, estado='ACTIVA').count()
+        total_seccionesv = Seccion.objects.count()
 
-        print(f'A-{asignaturas_activas}')
-        print(f's-{secciones_activas}')
+        # Obtener asignaturas activas y el conteo de secciones
+
+       
+        asignaturas_secciones_data = []  # Lista para almacenar la información de asignaturas y secciones
+
+        for salida in salidas_activas:
+            asignaturas_secciones_list = salida.get_asignaturas_secciones_list()
+            for asignatura, total_secciones in asignaturas_secciones_list:
+                salida_data=f"Actividad de salida: {salida.actividad} - (N.º de cuenta: {salida.numero_cuenta} - Fecha de salida: {salida.fecha_ingreso})"
+                # Agregar la información a la lista
+                asignaturas_secciones_data.append({
+                    'asignatura': asignatura,
+                    'total_secciones': total_secciones,
+                    'salidadata' : salida_data
+                })
+
+        print("-----------blockcode----------------")
+        for salida in salidas_activas:
+            for seccion in salida.secciones.all():
+                print(seccion.cantidad_alumnos())
+
+        secciones_data = []  # Lista para almacenar la información de secciones y cantidad de alumnos
+
+        for salida in salidas_activas:
+            for seccion in salida.secciones.all():
+                cantidad_alumnos = seccion.cantidad_alumnos()
+                seccion_concatenada = f"{seccion.asignatura.sigla} - {seccion.nombre}" 
+                seccion_asignaturanombre = f"{seccion.asignatura.nombre} - ( {seccion.asignatura.sigla} - {seccion.nombre} )" 
+                print(cantidad_alumnos)
+                # Agregar la información a la lista
+                secciones_data.append({
+                    'seccion': seccion_concatenada ,  # Supongamos que cada sección tiene un identificador único
+                    'cantidad_alumnos': cantidad_alumnos,
+                    'nombreAsig':seccion_asignaturanombre
+
+                })
 
         
+        print(secciones_data)
+
+
+
+        print("------------------------------------------")
+
+
 
         # Obtener asignaturas con el conteo de secciones
         
@@ -55,8 +84,10 @@ def home_coordinador(request):
             'total_alumnos': total_alumnos,
             'total_salidas': total_salidas,
             'total_asignaturas': total_asignaturas,
-            'total_secciones': total_secciones,
-            'salidas_activas': salidas_activas
+            'total_secciones': total_seccionesv,
+            'salidas_activas': salidas_activas,
+            'asignaturas_secciones': asignaturas_secciones_data,
+            'secciones': secciones_data 
         }
         return render(request, 'coordinador/home_coordinador.html', data)
     except:

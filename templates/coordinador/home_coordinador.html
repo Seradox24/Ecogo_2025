@@ -228,118 +228,86 @@
         <div class="borde-b-5 rounded"></div>
     </div>
 
+
+   
+
+
+
     <!-- Asignaturas Activas -->
     <section class="px-5p py-16"> 
-        <div class="borde-trazo-5 sombra">
-            <div class="p-4 md:p-5 bg-azul borde-sup-20">
+        <div class="borde-trazo-5 sombra ">
+            <div class="p-4 md:p-5 bg-azul borde-sup-20 ">
                 <h2 class="texto-blanco text-center mi-h3" id="exampleModalLabel">Asignaturas Activas</h2>
             </div>
 
+            {% if asignaturas_secciones %}
+            {% for asignaturas_secciones in asignaturas_secciones %}
+           
+           
+
             <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
-                <div class="col-span-2">
+                <div class="col-span-2 relative group">
                     <p class="mi-p bold">
-                        Ecoturismo - EC1937
+                        {{ asignaturas_secciones.asignatura }}
                     </p>
+                    <div class="absolute z-10 hidden group-hover:block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm dark:bg-gray-700">
+                        {{ asignaturas_secciones.salidadata }}
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
                 </div>
                 <div class="col-span-1">
                     <p class="mi-p">
-                        Total de Secciones: 3
+                        Total de Secciones:  {{ asignaturas_secciones.total_secciones }}
                     </p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
-                <div class="col-span-2">
-                    <p class="mi-p bold">
-                        Turismo ecológico - TE2853
-                    </p>
-                </div>
-                <div class="col-span-1">
-                    <p class="mi-p">
-                        Total de Secciones: 1
-                    </p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
-                <div class="col-span-2">
-                    <p class="mi-p bold">
-                        Turismo ecológico - TE2853
-                    </p>
-                </div>
-                <div class="col-span-1">
-                    <p class="mi-p">
-                        Total de Secciones: 1
-                    </p>
-                </div>
-            </div>
-
-            
+            {% endfor %}
+            {% else %}
+            <p class="text-center mi-h3"> No hay salidas registradas. </p>
+            {% endif %}
         </div>
     </section>
 
-    <!--  Secciones Activas -->
-    <section class="px-5p pb-16"> 
-        <div class="borde-trazo-5 sombra">
-            <div class="p-4 md:p-5 bg-azul borde-sup-20">
-                <h2 class="texto-blanco text-center mi-h3" id="exampleModalLabel">Secciones Activas</h2>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
-                <div class="col-span-2">
-                    <p class="mi-p bold">
-                        Ecoturismo - Sección 1
-                    </p>
-                </div>
-                <div class="col-span-1">
-                    <p class="mi-p">
-                        Cantidad de Alumnos: 23
-                    </p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
-                <div class="col-span-2">
-                    <p class="mi-p bold">
-                        Ecoturismo - Sección 2
-                    </p>
-                </div>
-                <div class="col-span-1">
-                    <p class="mi-p">
-                        Cantidad de Alumnos: 21
-                    </p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
-                <div class="col-span-2">
-                    <p class="mi-p bold">
-                        Ecoturismo - Sección 3
-                    </p>
-                </div>
-                <div class="col-span-1">
-                    <p class="mi-p">
-                        Cantidad de Alumnos: 18
-                    </p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
-                <div class="col-span-2">
-                    <p class="mi-p bold">
-                        Turísmo Ecológico - Sección 1
-                    </p>
-                </div>
-                <div class="col-span-1">
-                    <p class="mi-p">
-                        Cantidad de Alumnos: 25
-                    </p>
-                </div>
-            </div>
-
-            
+  <!--  Secciones Activas -->
+  <section class="px-5p pb-16"> 
+    <div class="borde-trazo-5 sombra">
+        <div class="p-4 md:p-5 bg-azul borde-sup-20">
+            <h2 class="texto-blanco text-center mi-h3" id="exampleModalLabel">Secciones Activas</h2>
         </div>
-    </section>
+
+        {% if secciones %}
+        {% for seccion in secciones %}
+
+        <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4 relative group">
+            <div class="col-span-2">
+                <p class="mi-p bold" data-tooltip-target="tooltip-animation">
+                    {{ seccion.seccion }}
+                </p>
+                <div class="absolute z-10 hidden group-hover:block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm dark:bg-gray-700">
+                    {{ seccion.nombreAsig }}
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+            </div>
+            <div class="col-span-1">
+                <p class="mi-p">
+                    Cantidad de Alumnos: {{ seccion.cantidad_alumnos }}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <p class="text-center mi-h3"> No hay salidas registradas. </p>
+        {% endif %}
+
+        
+    </div>
+</section>
+    
+
+
+
 
     <div class="px-10p">
         <div class="borde-b-5 rounded"></div>

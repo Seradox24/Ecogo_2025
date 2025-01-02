@@ -73,6 +73,43 @@ class SalidaTerreno(models.Model):
     def __str__(self):
         asignaturas_str = ', '.join([asignatura.nombre for asignatura in self.asignaturas.all()])
         return f"Salida a terreno de {asignaturas_str} - {self.fecha_ingreso}"
+    
+    def asignaturas_x_seccion(self):
+        """
+        Retorna un diccionario con las asignaturas y la cantidad de secciones asociadas a este viaje.
+        """
+        from django.db.models import Count
+
+        try:
+            asignaturas_secciones = self.secciones.values('asignatura__nombre').annotate(total_secciones=Count('id'))
+            data = {item['asignatura__nombre']: item['total_secciones'] for item in asignaturas_secciones}
+
+            # Agregar asignaturas sin secciones
+            asignaturas_sin_secciones = self.asignaturas.exclude(nombre__in=data.keys())
+            for asignatura in asignaturas_sin_secciones:
+                data[asignatura.nombre] = 'Sin secciones asignadas'
+
+            # Verificar secciones sin asignaturas
+            secciones_sin_asignaturas = self.secciones.filter(asignatura__isnull=True)
+            if secciones_sin_asignaturas.exists():
+                data['Secciones sin asignatura'] = 'Existen secciones sin asignatura asignada'
+
+            return data
+        except Exception as e:
+            # Log the exception if needed
+            return {}
+
+    def get_asignaturas_secciones_list(self):
+        """
+        Retorna una lista de tuplas con las asignaturas y la cantidad de secciones asociadas a este viaje.
+        """
+        try:
+            data = self.asignaturas_x_seccion()
+            return [(asignatura, total_secciones) for asignatura, total_secciones in data.items()]
+        except Exception as e:
+            # Log the exception if needed
+            return []
+
 
     class Meta:
         verbose_name = 'Salida Terreno'
