@@ -4,7 +4,7 @@
 ### Decoradores incluidos:
 ### - `Alumno_required`: Restringe acceso solo a usuarios con perfil de Alumno ('A').
 ### - `Docente_required`: Restringe acceso solo a usuarios con perfil de Docente ('D').
-### - `Coordinador_required`: Restringe acceso solo a usuarios con perfil de Coordinador ('C').
+### - `Coordinador_required`: Restringe acceso solo a usuarios con perfil de Coordinador ('C').d
 
 from functools import wraps
 from django.shortcuts import redirect, reverse

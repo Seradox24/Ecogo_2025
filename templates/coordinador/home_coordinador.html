@@ -3,28 +3,465 @@
 {% load static %}
 
 
-{% if user.is_authenticated %}
-    <h1>Hola, {{ user.username }}</h1>
-    <p >Nombre de la tabla: User</p>
-{% else %}
-    <h1>Hola</h1>
-{% endif %}
 
-{% if user.is_authenticated %}
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-{% endif %}
+
+    <!-- Items iniciales: Alumnos, Salidas, Asignaturas y Secciones  -->
+    <section class="py-5"> 
+        <div class="grid md:grid-cols-4 grid-cols-1 gap-5 px-5p">
+
+            <div class="borde-trazo-5 py-25 px-5 sombra relative">
+                <div class="grid grid-cols-2 items-center">
+                    <img src="../../assets/images/íconos/icono-personas.webp" class="w-14 sm:w-16">
+                    <div>
+                        <p class="texto-azul mi-p">Alumnos:</p>
+                        <h3 class="texto-azul mi-h2 bold">{{total_alumnos}}</h3> <!-- número -->
+                    </div>
+                </div>
+                
+            </div>  
+            <div class="borde-trazo-5 py-25 px-5 sombra relative">
+                <div class="grid grid-cols-2 items-center">
+                    <img src="../../assets/images/íconos/icono-salidas.webp" class="w-14 sm:w-16">
+                    <div>
+                        <p class="texto-azul mi-p">Salidas:</p>
+                        <h3 class="texto-azul mi-h2 bold">{{total_salidas}}</h3> <!-- número -->
+                    </div>
+                </div>
+            </div>  
+            <div class="borde-trazo-5 py-25 px-5 sombra relative">
+                <div class="grid grid-cols-2 items-center">
+                    <img src="../../assets/images/íconos/icono-documentos.webp" class="w-14 sm:w-16">
+                    <div>
+                        <p class="texto-azul mi-p">Asignaturas:</p>
+                        <h3 class="texto-azul mi-h2 bold">{{total_asignaturas}}</h3> <!-- número -->
+                    </div>
+                </div>
+            </div>  
+            <div class="borde-trazo-5 py-25 px-5 sombra relative">
+                <div class="grid grid-cols-2 items-center">
+                    <img src="../../assets/images/íconos/icono-secciones.webp" class="w-14 sm:w-16">
+                    <div>
+                        <p class="texto-azul mi-p">Secciones:</p>
+                        <h3 class="texto-azul mi-h2 bold">{{total_secciones}}</h3> <!-- número -->
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </section>
+    
+    <!-- Salidas -->
+
+    
+    <section class="px-5p py-16">
+        <h2 class="mi-h1 texto-azul pb-12">Salidas Programadas</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
+            
+            {% if salidas_activas %}
+            {% for salida in salidas_activas %}
+                <div class="card-salidas borde-trazo-5 sombra relative">
+                    <div class="absolute z-5 pt-3 pl-3">
+                        <p class="mi-p text-white">
+                            {{salida.fecha_ingreso}} - {{salida.fecha_termino}} 
+                        </p>
+                        <p class="mi-p text-white">
+                            Sede: Valparaíso
+                        </p>
+                    </div>
+                    <img src="../assets/images/img/img-salida-1.webp" class="borde-sup-20 w-full z-4">
+                    <div class=" py-3 px-10 bg-azul">
+                        <div class="flex flex-row justify-between pb-2">
+                            <p class="mi-p text-yellow-400">Ecoturísmo</p>
+                            <p class="mi-p text-yellow-400">{% for asignatura in salida.asignaturas.all %}
+                                
+                                   {{ asignatura.sigla }} {% if not forloop.last %} - {% endif %}
+                                
+                            {% empty %}
+                                <span class="text-gray-400">No asignadas</span>
+                            {% endfor %}</p>
+                        </div>
+                        <div class="h-24 grid place-items-center">
+                            <h2 class="py-auto texto-blanco text-center mi-h3">{{salida.actividad}}</h2>
+                        </div>
+                    </div>
+        
+                    <div class="grid grid-cols-4">
+                        <div class="col-span-1 bg-verde">
+                            <div class="py-2"></div>
+                        </div>
+                        <div class="col-span-3 bg-amarillo">
+                            <div class="py-2"></div>
+                        </div>
+                    </div>
+        
+                    <!-- Modal toggle -->
+                    <a class="text-decoration-none grid py-6 cursor-pointer" type="button" data-modal-target="static-modal-{{ forloop.counter }}" data-modal-toggle="static-modal-{{ forloop.counter }}"> 
+                        <p class="mi-p texto-azul text-center flex items-center justify-center texto-hover-verde">
+                            <span class="font-bold">Más Información </span><span class="pl-3 text-lg"> ➜</span>
+                        </p>
+                    </a>
+        
+                </div>
+        
+                <!-- Modal -->
+                <div id="static-modal-{{ forloop.counter }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed hidden z-50 inset-0 bg-slate-500 bg-opacity-80 overflow-y-auto h-full w-full px-4">
+                    <div class="relative p-4 w-full max-w-2xl max-h-full">
+                        <!-- Modal content -->
+                        <div class="relative borde-trazo-5 sombra dark:bg-gray-700">
+                            <!-- Modal header -->
+                            <div class="flex items-center justify-between p-4 md:p-5 bg-azul borde-sup-20">
+                                <h2 class="modal-title texto-blanco text-center mi-h3" id="exampleModalLabel">{{ salida.nombre }}</h2>
+                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="static-modal-{{ forloop.counter }}">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="p-4 md:p-5 py-5 bg-blanco borde-inf-20">
+                                <div class="grid grid-cols-3 py-2.5">
+                                    <div class="col-span-1">
+                                        <p class="texto-azul">Inicio:</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="texto-azul bold">{{salida.fecha_ingreso}}  </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-3 py-2.5">
+                                    <div class="col-span-1">
+                                        <p class="texto-azul">Término:</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="texto-azul bold">{{salida.fecha_termino}}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-3 py-2.5">
+                                    <div class="col-span-1">
+                                        <p class="texto-azul">Lugar de Encuentro:</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="texto-azul bold">Sede de Valparaíso</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-3 py-2.5">
+                                    <div class="col-span-1">
+                                        <p class="texto-azul">Destino:</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="texto-azul bold">{{ salida.lugar_ejecucion }}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-3 py-2.5">
+                                    <div class="col-span-1">
+                                        <p class="texto-azul">Duración:</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="texto-azul bold"> Días: ({{ salida.dias }}) - Noches: ({{ salida.noches}})   </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-3 py-2.5">
+                                    <div class="col-span-1">
+                                        <p class="texto-azul">Asignatura(s):</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="texto-azul bold">{% for asignatura in salida.asignaturas.all %}
+                                            <div class="mb-1">
+                                                {{ asignatura.nombre }}) {% if not forloop.last %} - {% endif %}
+                                            </div>
+                                        {% empty %}
+                                            <span class="text-gray-400">No asignadas</span>
+                                        {% endfor %}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-3 py-2.5">
+                                    <div class="col-span-1">
+                                        <p class="texto-azul">Docente(s) a cargo:</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="texto-azul bold">{% for seccion in salida.secciones.all %}
+                                            
+                                            {{ seccion.docente.usersmetadata.nombres }} {{ seccion.docente.usersmetadata.ap_paterno }} {{ seccion.docente.usersmetadata.ap_materno }} - {{ seccion.asignatura.sigla }} - {{ seccion.nombre }}){% if not forloop.last %}, {% endif %}
+                                          
+                                            
+                                            {% empty %}
+                                                Sin secciones
+                                            {% endfor %}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-3 py-2.5">
+                                    <div class="col-span-1">
+                                        <p class="texto-azul">Estado:</p>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <p class="texto-azul bold">{{ salida.estado }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="bg-gray-500 px-10 my-10 rounded-3xl ">
+                <p class="text-center text-white py-4 ">No hay salidas registradas.</p>
+            </div>
+        {% endif %}
+        
+
+
+
+           
+
+        
+        
+    </section>
+
+    <div class="px-10p">
+        <div class="borde-b-5 rounded"></div>
+    </div>
+
+    <!-- Asignaturas Activas -->
+    <section class="px-5p py-16"> 
+        <div class="borde-trazo-5 sombra">
+            <div class="p-4 md:p-5 bg-azul borde-sup-20">
+                <h2 class="texto-blanco text-center mi-h3" id="exampleModalLabel">Asignaturas Activas</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
+                <div class="col-span-2">
+                    <p class="mi-p bold">
+                        Ecoturismo - EC1937
+                    </p>
+                </div>
+                <div class="col-span-1">
+                    <p class="mi-p">
+                        Total de Secciones: 3
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
+                <div class="col-span-2">
+                    <p class="mi-p bold">
+                        Turismo ecológico - TE2853
+                    </p>
+                </div>
+                <div class="col-span-1">
+                    <p class="mi-p">
+                        Total de Secciones: 1
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
+                <div class="col-span-2">
+                    <p class="mi-p bold">
+                        Turismo ecológico - TE2853
+                    </p>
+                </div>
+                <div class="col-span-1">
+                    <p class="mi-p">
+                        Total de Secciones: 1
+                    </p>
+                </div>
+            </div>
+
+            
+        </div>
+    </section>
+
+    <!--  Secciones Activas -->
+    <section class="px-5p pb-16"> 
+        <div class="borde-trazo-5 sombra">
+            <div class="p-4 md:p-5 bg-azul borde-sup-20">
+                <h2 class="texto-blanco text-center mi-h3" id="exampleModalLabel">Secciones Activas</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
+                <div class="col-span-2">
+                    <p class="mi-p bold">
+                        Ecoturismo - Sección 1
+                    </p>
+                </div>
+                <div class="col-span-1">
+                    <p class="mi-p">
+                        Cantidad de Alumnos: 23
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
+                <div class="col-span-2">
+                    <p class="mi-p bold">
+                        Ecoturismo - Sección 2
+                    </p>
+                </div>
+                <div class="col-span-1">
+                    <p class="mi-p">
+                        Cantidad de Alumnos: 21
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
+                <div class="col-span-2">
+                    <p class="mi-p bold">
+                        Ecoturismo - Sección 3
+                    </p>
+                </div>
+                <div class="col-span-1">
+                    <p class="mi-p">
+                        Cantidad de Alumnos: 18
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 py-4 px-4">
+                <div class="col-span-2">
+                    <p class="mi-p bold">
+                        Turísmo Ecológico - Sección 1
+                    </p>
+                </div>
+                <div class="col-span-1">
+                    <p class="mi-p">
+                        Cantidad de Alumnos: 25
+                    </p>
+                </div>
+            </div>
+
+            
+        </div>
+    </section>
+
+    <div class="px-10p">
+        <div class="borde-b-5 rounded"></div>
+    </div>
+
+    <!-- Condiciones meteorológicas -->
+    <section class="px-10p py-16">
+        <h2 class="mi-h1 texto-azul pb-12 text-center">Condiciones meteorológicas</h2>
+
+        <div class="borde-trazo-5 sombra">
+            <iframe width="100%" height="450" class="borde-r-20"
+            src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=default&zoom=5&overlay=wind&product=ecmwf&level=surface&lat=-33.023&lon=-71.552"
+            frameborder="0">
+            </iframe>
+        </div>
+    </section>
+
+
+    <div class="py-50"></div>
+
+
+
+
+
+
+    <!-- Main modal NUEVO TAILWID -->
+    <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed hidden z-50 inset-0 bg-slate-500 bg-opacity-80 overflow-y-auto h-full w-full px-4 ">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative borde-trazo-5 sombra dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 bg-azul borde-sup-20">
+                    <h2 class="modal-title texto-blanco text-center mi-h3" id="exampleModalLabel">Ascenso al Cerro la Campana</h2>
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="static-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5 py-5 bg-blanco borde-inf-20">
+                    <div class="grid grid-cols-3 py-2.5">
+                        <div class="col-span-1">
+                            <p class="texto-azul">Inicio:</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="texto-azul bold">30 de septiembre - 12:00 AM </p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 py-2.5">
+                        <div class="col-span-1">
+                            <p class="texto-azul">Término:</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="texto-azul bold">3 de octubre - 2:00 PM </p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 py-2.5">
+                        <div class="col-span-1">
+                            <p class="texto-azul">Lugar de Encuentro:</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="texto-azul bold">Sede de Valparaíso</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 py-2.5">
+                        <div class="col-span-1">
+                            <p class="texto-azul">Destino:</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="texto-azul bold">Olmué, Región de Valparaíso</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 py-2.5">
+                        <div class="col-span-1">
+                            <p class="texto-azul">Duración:</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="texto-azul bold">4 días</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 py-2.5">
+                        <div class="col-span-1">
+                            <p class="texto-azul">Asignatura:</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="texto-azul bold">Ecoturismo - VJ3066</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 py-2.5">
+                        <div class="col-span-1">
+                            <p class="texto-azul">Docente a cargo:</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="texto-azul bold">Daniela Candia</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 py-2.5">
+                        <div class="col-span-1">
+                            <p class="texto-azul">Estado:</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="texto-azul bold">Confirmado</p>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+
+
 
 {% endblock %}
 
 
-<div class="container px-5p">
-    <div class="grid grid-cols-4 md:grid-cols-1 gap-2">
-
-        <div class="borde-trazo-5 sombra relative">
-            <h1>Hola</h1>
-        </div>  
-    </div>
-</div>

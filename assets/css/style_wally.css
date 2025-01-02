@@ -112,7 +112,7 @@
     font-size: 20px !important;
   }
   .mi-p {
-    font-size: 18px !important;
+    font-size: 16px !important;
     font-weight: 600;
   }
 }
@@ -138,8 +138,8 @@
 body {
   background-color: #FFFCF5 !important;
   color: #002857;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 .sombra {
@@ -310,6 +310,26 @@ body {
 
 .borde-r-0 {
   border-radius: 0px;
+}
+
+.bordes-laterales-5{
+  border-left: #002857 5px solid;
+  border-right: #002857 5px solid;
+}
+.borde-filtro-1{
+  border-left: #002857 5px solid;
+  border-right: #002857 5px solid;
+  border-top: #002857 5px solid;
+  z-index: 20;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+.borde-filtro-2{
+  border: #002857 5px solid;
+
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
 /*Aparte*/

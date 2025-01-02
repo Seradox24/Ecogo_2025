@@ -5,10 +5,10 @@
 
 
 <div class="mb-4 flex items-center">
-  <button class="btn btn-secondary flex items-center">
-    <img src="{% static 'botones/barrow.svg' %}" alt="Volver" class="h-24 mr-2">
-    <span class="mx-auto text-5xl text-center font-extrabold -mt-5">Volver</span>
-  </button>
+  <a href="{% url 'coordinador:listar-usuario' %}" class="btn btn-secondary flex items-center">
+      <img src="{% static 'botones/barrow.svg' %}" alt="Volver" class="h-20 mr-2">
+      <span class="mx-auto mi-h2 text-center font-extrabold -mt-5"><h2>Volver</h2></span>
+  </a>
 </div>
 
   <div class="mb-4  ">
@@ -16,7 +16,7 @@
   <h1 class="mx-auto text-5xl text-center font-extrabold"> Crear Nuevo Usuario</h1>
   </div>
   
-  <form class="px-10 font-semibold " method="POST" enctype="multipart/form-data">
+  <form class="px-10 pb-10 font-semibold " method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     
     <!-- Formulario para crear usuario -->
@@ -139,24 +139,26 @@
   
 
     <div class="card mb-4 borde-trazo-5 pt-5 text-cuscol2 ">
-      <div class="card-header font-semibold bg-gray-100 p-4">Información Académica</div>
+      <div class="card-header font-semibold bg-gray-100 p-4">
+        Información Académica
+      </div>
       <div class="card-body p-4">
         <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+
           <div class="mb-4">
             <label for="{{ metadata_form.perfil.id_for_label }}" class="form-label ">Perfil académico</label>
             {{ metadata_form.perfil|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
           </div>
-        <div class="mb-4">
-          <label for="{{ academy_form.semestre.id_for_label }}" class="form-label ">Semestre académico</label>
-          {{ academy_form.semestre|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
-        </div>
+
+          <div class="mb-4">
+            <label for="{{ academy_form.semestre.id_for_label }}" class="form-label ">Semestre académico</label>
+            {{ academy_form.semestre|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
         
-
-        <div>
-          <label for="{{ academy_form.cod_carrera.id_for_label }}" class="form-label">Codigo de la carrera</label>
-          {{ academy_form.cod_carrera|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
-        </div>
-
+          <div>
+            <label for="{{ academy_form.cod_carrera.id_for_label }}" class="form-label">Codigo de la carrera</label>
+            {{ academy_form.cod_carrera|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+          </div>
         
           <div>
             <label for="{{ academy_form.nom_carrera.id_for_label }}" class="form-label">Nombre de la carrera</label>
@@ -168,11 +170,11 @@
             {{ academy_form.sede|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
           </div>
 
-          
           <div>
             <label for="{{ academy_form.modalidad.id_for_label }}" class="form-label">Modalidad</label>
             {{ academy_form.modalidad|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
           </div>
+          
           <div>
             <label for="{{ academy_form.jornada.id_for_label }}" class="form-label">Jornada</label>
             {{ academy_form.jornada|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
@@ -208,23 +210,39 @@
             {{ academy_form.correo|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
           </div>
 
+                  
 
-
-
-
-
-
-
-
-
-          
         </div>
-        <div class="mb-4">
-          <label for="{{ user_form.asignaturas_inscritas.id_for_label }}" class="form-label ">Asignaturas inscritas</label>
-          {{ academy_form.asignaturas_inscritas|as_crispy_field }}  <!-- Renderiza el campo con crispy -->
+        <div class="card mb-0 borde-trazo-3 pt-5 text-cuscol2 ">
+          <div class="card-header font-semibold p-4">
+            Asignaturas inscritas
+          </div>
+          <div class="card-body p-4">
+            <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+
+              
+    
+              
+    
+              <div class="mb-4 ">
+                        <label for="{{ user_form.asignaturas_inscritas.id_for_label }}" class="form-label "></label>
+                        {{ academy_form.asignaturas_inscritas|as_crispy_field }}
+                        
+                          <!-- Renderiza el campo con crispy -->
+              </div>
+    
+            </div>
+    
+            
+            
+          </div>
         </div>
+        
+        
       </div>
     </div>
+
+   
     
 
     <div class="relative flex justify-center py-10">
@@ -235,5 +253,41 @@
     <!-- Botón para enviar el formulario -->
     
   </form>
+
+
+
+  
+<script>
+  // Configurar el Toast
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    }
+  });
+
+  // Mostrar mensajes de Django en Toast
+  {% if messages %}
+  {% for message in messages %}
+    Toast.fire({
+      icon: "{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% else %}info{% endif %}",
+      title: "{{ message }}"
+    });
+  {% endfor %}
+  {% endif %}
+
+  // Evento para el botón manual (prueba)
+  document.getElementById("show-toast").addEventListener("click", () => {
+    Toast.fire({
+      icon: "success",
+      title: "¡Este es un Toast de prueba!"
+    });
+  });
+</script>
 
   {% endblock %}

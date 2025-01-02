@@ -110,7 +110,7 @@ class Asignatura(models.Model):
     semestre = models.IntegerField(choices=SEMESTRE_CHOICES, default=1)
 
     def __str__(self):
-        return f"{self.nombre} - Sigla {self.sigla} - {self.get_semestre_display()}"
+        return f"{self.get_semestre_display()}  -  {self.nombre}  -  Sigla {self.sigla} "
 
     class Meta:
         db_table = 'asignaturas'
@@ -131,7 +131,7 @@ class Seccion(models.Model):
     cupo = models.IntegerField(default=30)
 
     def __str__(self):
-        return f"( {self.nombre} - {self.docente.usersmetadata.nombres} {self.docente.usersmetadata.ap_paterno})"
+        return f"( {self.nombre} - {self.docente.usersmetadata.nombres} {self.docente.usersmetadata.ap_paterno} - {self.asignatura.nombre} )"
 
     class Meta:
         db_table = 'secciones'
@@ -140,6 +140,8 @@ class Seccion(models.Model):
 
     def espacios_disponibles(self):
         return self.cupo - self.inscripciones.count()
+    
+  
 
 class Inscripcion(models.Model):
     alumno = models.ForeignKey(User, on_delete=models.CASCADE, related_name='inscripciones')

@@ -97,7 +97,7 @@ class UsersAcademyForm(forms.ModelForm):
             'nom_carrera': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de la carrera'}),
             'modalidad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Modalidad (Ej: Presencial)'}),
             'jornada': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Jornada (Ej: Diurna, Vespertina)'}),
-            'asignaturas_inscritas': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'asignaturas_inscritas': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input '}),
             'anno_ingreso': forms.Select(attrs={'class': 'form-select'}),  # Campo con opciones definidas en `SEMESTRE_CHOICES`.
             'cod_carrera': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Código de la carrera'}),
             'tipo_ingreso': forms.Select(attrs={'class': 'form-select'}),  # Campo con opciones definidas en `TIPOINGRE_CHOICES`.
@@ -122,6 +122,11 @@ class UsersAcademyForm(forms.ModelForm):
             'correoduoc': '',
             'correo': '',
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ordenar las asignaturas por semestre
+        self.fields['asignaturas_inscritas'].queryset = Asignatura.objects.all().order_by('semestre')
 
 
 
@@ -190,6 +195,7 @@ class SalidaTerrenoForm(forms.ModelForm):
         self.fields['diasemana'].queryset = DiaSemana.objects.all().order_by('id')
         self.fields['diasemana'].label_from_instance = lambda obj: obj.nombre
         self.fields['asignaturas'].queryset = Asignatura.objects.all().order_by('semestre', 'nombre')
+        self.fields['secciones'].queryset = Seccion.objects.all().order_by('asignatura', 'nombre')
         self.fields['docentes_apoyo'].queryset = UsersMetadata.objects.filter(perfil='D').order_by('nombres')
 
 
@@ -200,3 +206,32 @@ class SalidaTerrenoForm(forms.ModelForm):
             self.fields['fecha_ingreso'].widget.attrs['value'] = self.instance.fecha_ingreso.strftime('%Y-%m-%d')
         if self.instance and self.instance.fecha_termino:
             self.fields['fecha_termino'].widget.attrs['value'] = self.instance.fecha_termino.strftime('%Y-%m-%d')
+
+
+
+
+#--------- formularios de asignaturas
+
+class AsignaturaForm(forms.ModelForm):
+    class Meta:
+        model = Asignatura
+        fields = ['nombre', 'sigla', 'coordinador', 'semestre']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control border-gray-300'}),
+            'sigla': forms.TextInput(attrs={'class': 'form-control border-gray-300'}),
+            'coordinador': forms.Select(attrs={'class': 'form-select border-gray-300'}),
+            'semestre': forms.Select(attrs={'class': 'form-select border-gray-300'}),
+        }
+        labels = {
+            'nombre': '',
+            'sigla': '',
+            'coordinador': '',
+            'semestre': '',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(AsignaturaForm, self).__init__(*args, **kwargs)
+        self.fields['coordinador'].queryset = User.objects.filter(usersmetadata__perfil='C').order_by('username')
+        self.fields['coordinador'].label_from_instance = lambda obj: f'{obj.usersmetadata.nombres} {obj.usersmetadata.ap_paterno}'
+        self.fields['semestre'].widget.choices = Asignatura.SEMESTRE_CHOICES
+        

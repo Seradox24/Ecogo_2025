@@ -3,7 +3,7 @@
 {% load static %}
 
 
-<section class="px-5p py-12">
+<section class="px-5p pt-12">
     <div class="w-full flex flex-row justify-end">
         <div class="py-2 px-2 borde-trazo-5 borde-recto-der sombra mr-0">
             <h1 class="mi-h2 texto-azul text-right">Bienvenido, Matías Inayao</h1>
@@ -14,60 +14,248 @@
 
 
 
-<!-- Cards Salidas -->
-<section class="px-5p py-12">
-    <div class="container">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <div class="">
+<!-- Salidas -->
+<section class="px-5p py-16">
+    <h2 class="mi-h1 texto-azul pb-12">Próximas Salidas</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
+        
 
-                <div class="card-salidas borde-trazo-5 sombra relative">
-                    <div class="absolute z-30 pt-3 pl-3">
-                        <p class="mi-p text-white">
-                            30 de septiembre - 3 de octubre
-                        </p>
-                        <p class="mi-p text-white">
-                            Sede: Viña del Mar
-                        </p>
-                    </div>
-                    <img src="../assets/images/img/img-salida-1.webp" class="borde-sup-20 w-full z-10">
-                    <div class="py-5 px-10 bg-azul">
-                        <div class="flex flex-row justify-between pb-2">
-                            <p class="mi-p text-yellow-400">Ecoturísmo</p>
-                            <p class="mi-p text-yellow-400">EC1937</p>
-                        </div>
-                        <h2 class="texto-blanco text-center mi-h3">Ascenso al cerro la Campana</h2>
-                    </div>
+        <div class="card-salidas borde-trazo-5 sombra relative">
+            <div class="absolute z-30 pt-3 pl-3">
+                <p class="mi-p text-white">
+                    30 de septiembre - 3 de octubre
+                </p>
+                <p class="mi-p text-white">
+                    Sede: Viña del Mar
+                </p>
+            </div>
+            <img src="../assets/images/img/img-salida-1.webp" class="borde-sup-20 w-full z-10">
+            <div class=" py-3 px-10 bg-azul">
+                <div class="flex flex-row justify-between pb-2">
+                    <p class="mi-p text-yellow-400">Ecoturísmo</p>
+                    <p class="mi-p text-yellow-400">EC1937</p>
+                </div>
+                <div class="h-24 grid place-items-center">
+                    <h2 class="py-auto texto-blanco text-center mi-h3">Ascenso al cerro la Campana</h2>
+                </div>
+            </div>
 
-                    <div class="grid grid-cols-4">
-                        <div class="col-span-1 bg-verde">
-                            <div class="py-2"></div>
-                        </div>
-                        <div class="col-span-3 bg-amarillo">
-                            <div class="py-2"></div>
-                        </div>
-                    </div>
+            <div class="grid grid-cols-4">
+                <div class="col-span-1 bg-verde">
+                    <div class="py-2"></div>
+                </div>
+                <div class="col-span-3 bg-amarillo">
+                    <div class="py-2"></div>
+                </div>
+            </div>
 
 <!-- Modal toggle -->
 
 
 
-                    <a class="text-decoration-none grid py-6 cursor-pointer" type="button"  data-modal-target="static-modal" data-modal-toggle="static-modal"> 
-                        <p class="mi-p texto-azul text-center flex items-center justify-center texto-hover-verde">
-                            <span class="font-bold">Más Información </span><span class="pl-3 text-lg"> ➜</span>
-                        </p>
-                    </a>
+            <a class="text-decoration-none grid py-6 cursor-pointer" type="button"  data-modal-target="static-modal" data-modal-toggle="static-modal"> 
+                <p class="mi-p texto-azul text-center flex items-center justify-center texto-hover-verde">
+                    <span class="font-bold">Más Información </span><span class="pl-3 text-lg"> ➜</span>
+                </p>
+            </a>
 
+        </div>
+
+
+        <div class="card-salidas borde-trazo-5 sombra relative">
+            <div class="absolute z-30 pt-3 pl-3">
+                <p class="mi-p text-white">
+                    12 de ctubre - 15 de octubre
+                </p>
+                <p class="mi-p text-white">
+                    Sede: Valparaíso
+                </p>
+            </div>
+            <img src="../assets/images/img/img-salida-1.webp" class="borde-sup-20 w-full z-10">
+            <div class=" py-3 px-10 bg-azul">
+                <div class="flex flex-row justify-between pb-2">
+                    <p class="mi-p text-yellow-400">Ecoturísmo</p>
+                    <p class="mi-p text-yellow-400">ET3827</p>
                 </div>
-
+                <div class="h-24 grid place-items-center">
+                    <h2 class="py-auto texto-blanco text-center mi-h3">Observación de Fauna en Parque Tricao</h2>
+                </div>
             </div>
 
+            <div class="grid grid-cols-4">
+                <div class="col-span-1 bg-verde">
+                    <div class="py-2"></div>
+                </div>
+                <div class="col-span-3 bg-amarillo">
+                    <div class="py-2"></div>
+                </div>
+            </div>
+
+            <!-- Modal toggle -->
+            <a class="text-decoration-none grid py-6 cursor-pointer" type="button"  data-modal-target="static-modal" data-modal-toggle="static-modal"> 
+                <p class="mi-p texto-azul text-center flex items-center justify-center texto-hover-verde">
+                    <span class="font-bold">Más Información </span><span class="pl-3 text-lg"> ➜</span>
+                </p>
+            </a>
+
+        </div>
+
+    </div>
+    
+</section>
+
+<div class="px-10p">
+    <div class="borde-b-5 rounded"></div>
+</div>
+
+<!-- Personal y condiciones meteorológicas -->
+<section class="px-5p py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
+
+        <!-- Personal docentes -->
+        <div class="borde-trazo-5 sombra h-min">
+            <div class="p-4 md:p-5 bg-azul borde-sup-20">
+                <h2 class="texto-blanco text-center mi-h3">Personal docente y de apoyo</h2>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 py-4 px-4">
+
+                <img src="../../assets/images/elementos gráficos/usuario.webp" class="w-20 col-span-1">
+
+                <div class="col-span-2">
+                    <p class="mi-p">
+                        Docente titular:
+                    </p>
+                    <h3 class="mi-h3">
+                        Matías Inayao
+                    </h3>
+                </div>
+
+                <img src="../../assets/images/íconos/icono-documentos-2.webp" class="w-16 justify-self-end col-span-1">
+            </div>
+
+            <div class="borde-b-3"></div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 py-4 px-4">
+
+                <img src="../../assets/images/elementos gráficos/usuario.webp" class="w-20 col-span-1">
+
+                <div class="col-span-2">
+                    <p class="mi-p">
+                        Docente titular:
+                    </p>
+                    <h3 class="mi-h3">
+                        Eduardo Fuentes
+                    </h3>
+                </div>
+
+                <img src="../../assets/images/íconos/icono-documentos-2.webp" class="w-16 justify-self-end col-span-1">
+            </div>
+        </div>
+
+        <!-- Condiciones meteorológicas -->
+        <div class="borde-trazo-5 sombra h-full">
+            <div class="p-4 md:p-5 bg-azul borde-sup-20">
+                <h2 class="texto-blanco text-center mi-h3">Condiciones Meteorológicas: Temuco, Chile</h2>
+            </div>
+            <div class="grid grid-cols-3">
+
+                <!-- IZQ -->
+                <div class="col-span-1 px-4 py-4">
+                    
+                    <p class="mi-p text-center pb-2">
+                        Parcialmente nublado
+                    </p>
+                    <img src="../../assets/images/elementos gráficos/usuario.webp" class="w-full col-span-1 pb-2">
+                    <p class="mi-p text-center pb-3">
+                        13°C
+                    </p>
+                    <h3 class="mi-h3 text-center">
+                        Hoy
+                    </h3>
+                    <p class="mi-p text-center ">
+                        02/10/24
+                    </p>
+                    <p class="mi-p text-center pt-6">
+                        Última actualización: 8:32 01/10/24 
+                    </p>
+
+                    
+                </div>
+
+                <!-- Centro -->
+                <div class="col-span-1 px-4 py-4 bordes-laterales-5">
+                    
+                    <p class="mi-p text-center pb-2">
+                        Parcialmente nublado
+                    </p>
+                    <img src="../../assets/images/elementos gráficos/usuario.webp" class="w-full col-span-1 pb-2">
+                    <p class="mi-p text-center pb-3">
+                        13°C
+                    </p>
+                    <h3 class="mi-h3 text-center">
+                        Hoy
+                    </h3>
+                    <p class="mi-p text-center ">
+                        02/10/24
+                    </p>
+                    <p class="mi-p text-center pt-6">
+                        Última actualización: 8:32 01/10/24 
+                    </p>
+
+                    
+                </div>
+
+                <!-- DER -->
+                <div class="col-span-1 px-4 py-4">
+                    
+                    <p class="mi-p text-center pb-2">
+                        Parcialmente nublado
+                    </p>
+                    <img src="../../assets/images/elementos gráficos/usuario.webp" class="w-full col-span-1 pb-2">
+                    <p class="mi-p text-center pb-3">
+                        13°C
+                    </p>
+                    <h3 class="mi-h3 text-center">
+                        Hoy
+                    </h3>
+                    <p class="mi-p text-center ">
+                        02/10/24
+                    </p>
+                    <p class="mi-p text-center pt-6">
+                        Última actualización: 8:32 01/10/24 
+                    </p>
+
+                    
+                </div>
+                
+            </div>
         </div>
     </div>
 </section>
 
+<div class="px-10p">
+    <div class="borde-b-5 rounded"></div>
+</div>
+
+<!-- Condiciones meteorológicas -->
+<section class="px-10p py-16">
+    <h2 class="mi-h1 texto-azul pb-12 text-center">Condiciones meteorológicas</h2>
+
+    <div class="borde-trazo-5 sombra">
+        <iframe width="100%" height="450" class="borde-r-20"
+        src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=default&zoom=5&overlay=wind&product=ecmwf&level=surface&lat=-33.02457&lon=-71.55183"
+        frameborder="0">
+        </iframe>
+    </div>
+</section>
+
+
+<div class="py-50"></div>
 
 
 
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 <!-- Main modal NUEVO TAILWID -->
 <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed hidden z-50 inset-0 bg-slate-500 bg-opacity-80 overflow-y-auto h-full w-full px-4 ">

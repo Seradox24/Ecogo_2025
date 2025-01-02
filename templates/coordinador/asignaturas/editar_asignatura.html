@@ -1,0 +1,130 @@
+{% extends '../../layout/index_C.html' %}
+{% load static %}
+{% block content %}
+{% load tailwind_filters %}
+
+
+
+<div class="mb-4 flex items-center">
+    <a href="{% url 'coordinador:home_coordinador' %}" class="btn btn-secondary flex items-center">
+        <img src="{% static 'botones/barrow.svg' %}" alt="Volver" class="h-20 mr-2">
+        <h2 class="mi-h2 mx-auto text-center -mt-5">Volver</h2>
+    </a>
+
+
+</div>
+
+
+
+
+
+
+
+
+<form class="px-10 font-semibold " method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <!-- Formulario para crear usuario -->
+
+    <div class="card mb-4 borde-trazo-5 pt-0 text-cuscol2 sombra">
+        <h1 class="mx-auto border-0  rounded-t-2xl mi-h2 text-center bg-cuscol2 text-white">Editar Asignatura</h1>
+        <div class="card-body p-4">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Nombre de la Asignatura</label>
+                    {{ form.nombre|as_crispy_field  }}
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Sigla</label>
+                    {{ form.sigla|as_crispy_field  }}
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Coordinador</label>
+                    {{ form.coordinador|as_crispy_field  }}
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Semestre</label>
+                    {{ form.semestre|as_crispy_field  }}
+                </div>
+            </div>
+            <div class="relative flex justify-center py-10">
+                    
+                <button type="submit" class="bg-cuscol4 boton sombra  borde-trazo-5 text-cuscol2 font-extrabold text-lg py-2 px-4 w-3/4 relative">Editar</button>
+            </div>
+           
+        </div>
+    </div>
+
+      <!-- Botón para enviar el formulario -->
+      
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- Secciones -->
+
+
+
+    <div class="py-36 px-5p">
+        <h2 class="font-bold mb-4 mi-h2 pb-5">Secciones</h2>
+        
+        <div x-data="{ activeTab: 0 }">
+            <!-- Tabs -->
+            <ul class="flex items-center">
+                {% for seccion in secciones %}
+                    <li>
+                        <button 
+                            @click="activeTab = {{ forloop.counter0 }}" 
+                            :class="{ 'texto-azul borde-filtro-1 py-2 ': activeTab === {{ forloop.counter0 }} }"
+                            class="px-4 py-2 texto-azul"
+                        >
+                            {{ seccion.nombre }}
+                        </button>
+                    </li>
+                {% endfor %}
+            </ul>
+            
+            <!-- Tab Content -->
+            <div class="p-4 borde-filtro-2">
+                {% for seccion in secciones %}
+                    <div x-show="activeTab === {{ forloop.counter0 }}" class="p-4">
+                        <h3 class="text-lg font-bold pb-3">Detalles de la Sección</h3>
+                        <p><strong>Docente:</strong> {{ seccion.docente.usersmetadata.nombres }} {{ seccion.docente.usersmetadata.ap_paterno }}</p>
+                        <p><strong>Cupo:</strong> {{ seccion.cupo }}</p>
+                        <p><strong>Espacios disponibles:</strong> {{ seccion.espacios_disponibles }}</p>
+                        
+                        <div class="mt-4">
+                            <a href="" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mr-2">
+                                Editar
+                            </a>
+                            <a href="" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">
+                                Eliminar
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+
+
+    
+
+{% endblock %}

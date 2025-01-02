@@ -1,0 +1,126 @@
+{% extends '../../layout/index_C.html' %}
+{% load static %}
+{% block content %}
+{% load tailwind_filters %}
+
+
+
+
+<div class="mb-4 flex items-center">
+    <a href="{% url 'coordinador:home_coordinador' %}" class="btn btn-secondary flex items-center">
+        <img src="{% static 'botones/barrow.svg' %}" alt="Volver" class="h-20 mr-2">
+        <h2 class="mi-h2 mx-auto text-center -mt-5">Volver</h2>
+    </a>
+</div>
+
+
+
+
+
+
+
+
+<h1 class=" py-10 sm:text-5xl mb-4 md:mb-0 text-center mi-h1 md:text-center w-full md:w-auto">Gestion de Usuarios</h1>
+
+<div class="mb-4 flex flex-col items-center md:flex-row md:items-center md:justify-between px-4">
+   
+    
+    <div class="md:ml-auto">
+        <a href="{% url 'coordinador:crear-usuario' %}" class="boton borde-trazo-3 px-6 py-2 texto-parrafo">Agregar nuevo usuario
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+        </a>
+    </div>
+</div>
+
+
+
+
+
+<div class="bg-white shadow-md rounded-lg p-4 mb-4">
+    <form method="get" action="{% url 'coordinador:lista-usuarios' %}">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="mb-4">
+          <label for="perfil" class="block text-sm font-medium text-gray-700">Perfil:</label>
+          <select name="perfil" class="form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm">
+            <option value="" {% if not request.GET.perfil %}selected{% endif %}>Todos</option>
+            <option value="Docente" {% if request.GET.perfil == 'Docente' %}selected{% endif %}>Docente</option>
+            <option value="Alumno" {% if request.GET.perfil == 'Alumno' %}selected{% endif %}>Alumno</option>
+            <option value="Coordinador" {% if request.GET.perfil == 'Coordinador' %}selected{% endif %}>Coordinador</option>
+          </select>
+        </div>
+  
+        <div class="mb-4">
+          <label for="sexo" class="block text-sm font-medium text-gray-700">Sexo:</label>
+          <select name="sexo" class="form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm">
+            <option value="" {% if not request.GET.sexo %}selected{% endif %}>Todos</option>
+            <option value="MASCULINO" {% if request.GET.sexo == 'MASCULINO' %}selected{% endif %}>Masculino</option>
+            <option value="FEMENINO" {% if request.GET.sexo == 'FEMENINO' %}selected{% endif %}>Femenino</option>
+          </select>
+        </div>
+  
+        <div class="mb-4">
+          <label for="search" class="block text-sm font-medium text-gray-700">Buscar:</label>
+          <div class="flex items-center">
+            <input type="text" name="search" class="form-input block w-full py-2 px-3 rounded-md border-gray-300 shadow-sm" placeholder="Buscar" value="{{ request.GET.search }}">
+            <button class="ml-2 bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 focus:outline-none" type="submit">
+              <i class="fa-solid fa-magnifying-glass">Buscar</i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+
+
+  <h1 class="mt-4 text-2xl font-bold text-gray-800">Lista de Usuarios</h1>
+<ul class="space-y-4">
+  {% for usuario in usuarios %}
+    <li class="bg-white p-4 rounded-lg shadow-md">
+      <div class="flex justify-between items-start">
+        <div class="space-y-2">
+          <p><strong>Nombre de usuario:</strong> {{ usuario.user.username }}</p>
+          <p><strong>Correo:</strong> {{ usuario.user.email }}</p>
+          <p><strong>Perfil:</strong> {{ usuario.perfil.nombre }}</p>
+          <p><strong>Sexo:</strong> {{ usuario.sexo.nombre }}</p>
+          <p><strong>Estado:</strong> {{ usuario.estado }}</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsuario{{ usuario.id }}" aria-expanded="false" aria-controls="collapseUsuario{{ usuario.id }}">
+            Ver Perfil
+          </button>
+          <a href="" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none">Editar</a>
+          <form method="post" action="" class="ml-2">
+            {% csrf_token %}
+            <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none" onclick="confirmarEliminacion(this)">Eliminar</button>
+          </form>
+        </div>
+      </div>
+      <hr class="my-4">
+      <div class="collapse" id="collapseUsuario{{ usuario.id }}">
+        <!-- Contenido del perfil -->
+        <h5 class="text-lg font-semibold text-gray-800">Información adicional de: {{ usuario.user.username }}</h5>
+
+        <!-- Enlace de descarga de la ficha médica -->
+        {% for documento in usuario.documentos_cer_medico.all %}
+          <div class="mt-2">
+            <a href="{{ documento.archivo.url }}" download="{{ documento.nombre }}" class="text-blue-500 hover:text-blue-700">
+              Descargar Ficha Médica {{ documento.archivo.size|filesizeformat }}
+            </a>
+            <form method="post" action="{% url 'eliminar_documento' documento.id %}" class="inline-block ml-4">
+              {% csrf_token %}
+              <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none" onclick="return confirm('¿Estás seguro de que quieres eliminar este documento?')">Eliminar</button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    </li>
+  {% empty %}
+    <li class="bg-white p-4 rounded-lg shadow-md">No hay usuarios disponibles.</li>
+  {% endfor %}
+</ul>
+
+
+{% endblock %}
