@@ -45,9 +45,9 @@
           <label for="perfil" class="block text-sm font-medium text-gray-700">Perfil:</label>
           <select name="perfil" class="form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm">
             <option value="" {% if not request.GET.perfil %}selected{% endif %}>Todos</option>
-            <option value="Docente" {% if request.GET.perfil == 'Docente' %}selected{% endif %}>Docente</option>
-            <option value="Alumno" {% if request.GET.perfil == 'Alumno' %}selected{% endif %}>Alumno</option>
-            <option value="Coordinador" {% if request.GET.perfil == 'Coordinador' %}selected{% endif %}>Coordinador</option>
+            <option value="D" {% if request.GET.perfil == 'D' %}selected{% endif %}>Docente</option>
+            <option value="A" {% if request.GET.perfil == 'A' %}selected{% endif %}>Alumno</option>
+            <option value="C" {% if request.GET.perfil == 'C' %}selected{% endif %}>Coordinador</option>
           </select>
         </div>
   
@@ -55,8 +55,8 @@
           <label for="sexo" class="block text-sm font-medium text-gray-700">Sexo:</label>
           <select name="sexo" class="form-select block w-full mt-1 rounded-md border-gray-300 shadow-sm">
             <option value="" {% if not request.GET.sexo %}selected{% endif %}>Todos</option>
-            <option value="MASCULINO" {% if request.GET.sexo == 'MASCULINO' %}selected{% endif %}>Masculino</option>
-            <option value="FEMENINO" {% if request.GET.sexo == 'FEMENINO' %}selected{% endif %}>Femenino</option>
+            <option value="M" {% if request.GET.sexo == 'M' %}selected{% endif %}>Masculino</option>
+            <option value="F" {% if request.GET.sexo == 'F' %}selected{% endif %}>Femenino</option>
           </select>
         </div>
   

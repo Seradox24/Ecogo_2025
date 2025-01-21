@@ -158,7 +158,43 @@ def lista_usuarios(request):
         'paginator': paginator
     }
 
-    return render(request, 'coordinador/usuarios/lista_usuarios.html', data)
+    return render(request, 'coordinador/usuarios/listar_usuarios.html', data)
+
+from django.db.models import Q
+
+def lista_usuarios(request):
+    # Obtener el valor de búsqueda del parámetro GET
+    search_query = request.GET.get('search', '')
+
+    # Filtrar los usuarios según el valor de búsqueda
+    usuarios = UsersMetadata.objects.filter(
+        Q(user__username__icontains=search_query) |
+        Q(user__email__icontains=search_query) |
+        Q(nombres__icontains=search_query) |
+        Q(ap_paterno__icontains=search_query) |
+        Q(ap_materno__icontains=search_query) |
+        Q(rut__icontains=search_query) |
+        Q(estado_civil__icontains=search_query) |
+        Q(direccion__icontains=search_query) |
+        Q(numero__icontains=search_query) |
+        Q(celular__icontains=search_query) |
+        Q(conctacto_sostenedor__icontains=search_query)
+    ).distinct()
+
+    # Obtener los filtros adicionales
+    perfil_seleccionado = request.GET.get('perfil', '')
+    sexo_seleccionado = request.GET.get('sexo', '')
+
+    # Aplicar filtros adicionales si existen
+    if perfil_seleccionado:
+        usuarios = usuarios.filter(perfil=perfil_seleccionado)
+
+    if sexo_seleccionado:
+        usuarios = usuarios.filter(sexo=sexo_seleccionado)
+
+    return render(request, 'coordinador/usuarios/listar_usuarios.html', {'usuarios': usuarios})
+
+
 
     
     
