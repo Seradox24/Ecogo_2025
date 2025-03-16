@@ -24,7 +24,7 @@ conf_string = f.read()
 f.close()
 conf = json.loads(conf_string)
 
-
+BASE_URL=conf['base_url']
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

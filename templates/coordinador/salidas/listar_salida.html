@@ -78,6 +78,12 @@
                             <a href="{% url 'coordinador:editar_salida' salida.id %}" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center"><p>Editar</p></a>
                             <a href="#" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center"><p>Notificar</p></a>
                             <a href="#" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center"><p>Agregar documentos</p></a>
+                            <form method="post" action="{% url 'coordinador:crear_grupo_wsp' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center">
+                                  <p>Crear Grupo WSP</p>
+                                </button>
+                              </form>
                             <button  onclick="confirmDelete('{{ salida.actividad }}', '{% url 'coordinador:eliminar_salida' salida.id %}')" class="bg-gray-400 hover:bg-cuscol2 text-white borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center" type="button">
                                 <p>Eliminar</p>
                             </button>
@@ -356,7 +362,12 @@
 {% for salida in salidas %}
 
 
-
+{% comment %} s-------------------------------------------------------------------------------------------------------------------------------------
+ -------------------------------------------------------------------------------
+ 
+ 
+ -----------------------------------------------------------------------------------
+ {% endcomment %}
 
 <div class="hidden sm:block">
    
@@ -376,6 +387,16 @@
                     <span>Agregar documentos</span>
                     
                 </button>
+
+                <form method="post" action="{% url 'coordinador:crear_grupo_wsp' %}" onsubmit="return confirmCreateGroup(event, this);">
+                    {% csrf_token %}
+                    <button type="submit" class="boton borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center">
+                      <p>Crear Grupo WSP</p>
+                    </button>
+                </form>
+
+
+
                 <button onclick="confirmDelete('{{ salida.actividad }}', '{% url 'coordinador:eliminar_salida' salida.id %}')" class=" bg-gray-400 hover:bg-cuscol2 text-white borde-trazo-3 px-6 py-2 text-sm sm:text-base flex items-center justify-center" type="button">
                     Eliminar
                 </button>

@@ -33,7 +33,9 @@ ACTIVIDAD_CHOICES = [
 ESTADO_CHOICES = [
     ('EJECUTADO', 'Ejecutado'),
     ('POR_EJECUTAR', 'Por Ejecutar'),
+    ('SUSPENDIDO', 'Suspendido'),
     ('por_definir', 'Por definir'),  # Se agrega por defecto
+
 ]
 
 SEMESTRE_CHOICES = [
@@ -50,7 +52,7 @@ SEMESTRE_CHOICES = [
 class SalidaTerreno(models.Model):
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='por_definir')  # Default agregado
     activo = models.BooleanField(default=True)  # Campo booleano para activar/desactivar
-    numero_cuenta = models.IntegerField()
+    numero_cuenta = models.IntegerField(validators=[MaxValueValidator(9999999999)], blank=True, null=True)
     semestre = models.IntegerField(choices=SEMESTRE_CHOICES, blank=True, null=True)
     anio = models.PositiveIntegerField(validators=[MaxValueValidator(3000)], blank=True, null=True)
     semana = models.PositiveIntegerField(validators=[MaxValueValidator(3000)], blank=True, null=True)
@@ -64,10 +66,35 @@ class SalidaTerreno(models.Model):
     asignaturas = models.ManyToManyField(Asignatura, related_name='salidas_terreno', blank=True)
     exp_aprendizaje = models.CharField(max_length=20, choices=EXP_APRENDIZAJE_CHOICES, blank=True, null=True, default='por_definir')
     secciones = models.ManyToManyField(Seccion, blank=True)
+    docente_reemplazo  = models.OneToOneField(UsersMetadata, related_name='salidas_terreno_apoyo_reemplazo', blank=True, null=True, on_delete=models.SET_NULL)#
+    # docentes_apoyo2 = models.OneToOneField(UsersMetadata, related_name='salidas_terreno_apoyo2', blank=True, null=True, on_delete=models.SET_NULL)#
+    # docentes_apoyo3 = models.OneToOneField(UsersMetadata, related_name='salidas_terreno_apoyo3', blank=True, null=True, on_delete=models.SET_NULL)#
+    # docentes_apoyo4 = models.OneToOneField(UsersMetadata, related_name='salidas_terreno_apoyo4', blank=True, null=True, on_delete=models.SET_NULL)#
     docentes_apoyo = models.ManyToManyField(UsersMetadata, related_name='salidas_terreno_apoyo', blank=True)
     num_salida = models.CharField(max_length=30, choices=[(str(i), str(i)) for i in range(1, 5)] + [('no_requiere', 'No Requiere')], blank=True, null=True)
-    observaciones = models.TextField()
+    observaciones = models.TextField(blank=True, null=True)
     semaforo = models.CharField(max_length=20, choices=SEMAFORO_CHOICES, blank=True, null=True)
+    totalhoras = models.PositiveIntegerField(validators=[MaxValueValidator(99)], blank=True, null=True, default=0)#
+    linkmapa = models.URLField(max_length=200, blank=True, null=True)#
+    iframe_html = models.TextField(blank=True, null=True)#
+    cantidad_alumnos = models.PositiveIntegerField(validators=[MaxValueValidator(99)], blank=True, null=True, default=0)#
+    proveedor_sugerido = models.CharField(max_length=100, blank=True, null=True)#
+    nro_oc_transporte = models.CharField(max_length=100, blank=True, null=True)#
+    proveedor_transporte = models.CharField(max_length=100, blank=True, null=True)#
+    valor_transporte = models.PositiveIntegerField(validators=[MaxValueValidator(9999999)], blank=True, null=True, default=0)#
+    proveedor_servicios = models.CharField(max_length=100, blank=True, null=True, default='No Aplica')#
+    nro_oc_servicios = models.CharField(max_length=100, blank=True, null=True, default='No Aplica')#
+    valor_servicios = models.PositiveIntegerField(validators=[MaxValueValidator(9999999)], blank=True, null=True, default=0)#
+    observaciones_programacion = models.TextField(blank=True, null=True)#
+    docente_responsable_doc  = models.OneToOneField(UsersMetadata, related_name='salidas_terreno_docente_responsable', blank=True, null=True, on_delete=models.SET_NULL)#
+
+
+
+
+
+
+
+
     
 
     def __str__(self):

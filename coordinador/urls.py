@@ -8,6 +8,7 @@ urlpatterns = [
     path('',home_coordinador , name='home_coordinador'),
     #usuarios
     path('crear-usuario/', crear_usuario, name='crear-usuario'),
+    path('editar-usuario/<int:id>/', editar_usuario, name='editar-usuarios'),
     path('listar-usuario/', listar_usuario, name='listar-usuario'),
     path('lista-usuarios/', lista_usuarios, name='lista-usuarios'), 
     #Gestionar salidas
@@ -16,6 +17,7 @@ urlpatterns = [
     path('editar-salida/<int:id>/', editar_salida, name="editar_salida"),
     path('eliminar-salida/<int:id>/', eliminar_salida, name="eliminar_salida"),
     path('obtener-secciones/', obtener_secciones, name='obtener_secciones'),
+    path('msj-wsp/', crear_grupo_wsp, name='crear_grupo_wsp'),
     #Gestionar alumnos
     #path('listar-alumno/', listar_alumno, name="listar_alumno"),
 

@@ -39,7 +39,27 @@ class UserCreationWithMetadataForm(UserCreationForm):
             'class': 'form-input mt-1 block w-full border-gray-300 rounded-md',
             'placeholder': 'Confirmar contraseña'
         }))
-    
+
+
+class UserEditForm(forms.ModelForm):
+    email = forms.EmailField(required=True, help_text='Requerido. Ingresa una dirección de correo electrónico válida.')
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+        # Definir widgets personalizados con Tailwind
+    username = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={
+            'class': 'form-input mt-1 block w-full border-gray-300 rounded-md',
+            'placeholder': 'Nombre de usuario'
+        }))
+    email = forms.EmailField(
+        label="",
+        widget=forms.EmailInput(attrs={
+            'class': 'form-input mt-1 block w-full border-gray-300 rounded-md',
+            'placeholder': 'Correo electrónico'
+        }))
     
 class UsersMetadataForm(forms.ModelForm):
     username_field = forms.CharField(required=False, widget=forms.HiddenInput())  # Campo adicional opcional para capturar el nombre de usuario.
@@ -143,7 +163,10 @@ class SalidaTerrenoForm(forms.ModelForm):
         fields = [
             'estado', 'activo', 'numero_cuenta', 'semestre', 'anio', 'semana', 'diasemana', 'actividad',
             'fecha_ingreso', 'fecha_termino', 'dias', 'noches', 'lugar_ejecucion', 'asignaturas', 'exp_aprendizaje',
-            'secciones', 'docentes_apoyo', 'num_salida', 'observaciones', 'semaforo'
+            'secciones', 'docentes_apoyo', 'num_salida', 'observaciones', 'semaforo','docente_reemplazo','totalhoras',
+            'linkmapa','iframe_html','cantidad_alumnos','proveedor_sugerido','nro_oc_transporte','proveedor_transporte',
+            'valor_transporte','proveedor_servicios','nro_oc_servicios','valor_servicios','observaciones_programacion',
+            'docente_responsable_doc'
         ]
         widgets = {
             'estado': forms.Select(attrs={'class': 'form-select border-gray-300'}),
@@ -166,6 +189,20 @@ class SalidaTerrenoForm(forms.ModelForm):
             'num_salida': forms.Select(attrs={'class': 'form-select border-gray-300'}),
             'observaciones': forms.Textarea(attrs={'class': 'form-control border-gray-300'}),
             'semaforo': forms.Select(attrs={'class': 'form-select border-gray-300'}),
+            'docente_reemplazo': forms.Select(attrs={'class': 'form-select border-gray-300'}),
+            'totalhoras': forms.NumberInput(attrs={'class': 'form-control border-gray-300'}),
+            'linkmapa': forms.URLInput(attrs={'class': 'form-control border-gray-300'}),
+            'iframe_html': forms.Textarea(attrs={'class': 'form-control border-gray-300'}),
+            'cantidad_alumnos': forms.NumberInput(attrs={'class': 'form-control border-gray-300'}),
+            'proveedor_sugerido': forms.TextInput(attrs={'class': 'form-control border-gray-300'}),
+            'nro_oc_transporte': forms.TextInput(attrs={'class': 'form-control border-gray-300'}),
+            'proveedor_transporte': forms.TextInput(attrs={'class': 'form-control border-gray-300'}),
+            'valor_transporte': forms.NumberInput(attrs={'class': 'form-control border-gray-300'}),
+            'proveedor_servicios': forms.TextInput(attrs={'class': 'form-control border-gray-300'}),
+            'nro_oc_servicios': forms.TextInput(attrs={'class': 'form-control border-gray-300'}),
+            'valor_servicios': forms.NumberInput(attrs={'class': 'form-control border-gray-300'}),
+            'observaciones_programacion': forms.Textarea(attrs={'class': 'form-control border-gray-300'}),
+            'docente_responsable_doc': forms.Select(attrs={'class': 'form-select border-gray-300'}),
         }
         labels = {
             'estado': '',
@@ -188,6 +225,21 @@ class SalidaTerrenoForm(forms.ModelForm):
             'num_salida': '',
             'observaciones': '',
             'semaforo': '',
+            'docente_reemplazo': '',
+            'totalhoras': '',
+            'linkmapa': '',
+            'iframe_html': '',
+            'cantidad_alumnos': '',
+            'proveedor_sugerido': '',
+            'nro_oc_transporte': '',
+            'proveedor_transporte': '',
+            'valor_transporte': '',
+            'proveedor_servicios': '',
+            'nro_oc_servicios': '',
+            'valor_servicios': '',
+            'observaciones_programacion': '',
+            'docente_responsable_doc': '',
+
         }
 
     def __init__(self, *args, **kwargs):
@@ -197,6 +249,8 @@ class SalidaTerrenoForm(forms.ModelForm):
         self.fields['asignaturas'].queryset = Asignatura.objects.all().order_by('semestre', 'nombre')
         self.fields['secciones'].queryset = Seccion.objects.all().order_by('asignatura', 'nombre')
         self.fields['docentes_apoyo'].queryset = UsersMetadata.objects.filter(perfil='D').order_by('nombres')
+        self.fields['docente_reemplazo'].queryset = UsersMetadata.objects.filter(perfil='D').order_by('nombres')
+        self.fields['docente_responsable_doc'].queryset = UsersMetadata.objects.filter(perfil='D').order_by('nombres')
 
 
 

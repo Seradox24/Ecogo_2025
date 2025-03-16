@@ -1,3 +1,4 @@
+
 # import de librerias generales
 from itertools import count
 from django.http import Http404
@@ -5,16 +6,16 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+import requests
 from core.decorators import Coordinador_required
-from core.models import Inscripcion , Asignatura, Seccion, UsersMetadata
+from core.models import Inscripcion , Asignatura, Seccion, UsersAcademy, UsersMetadata
+from django.db.models import Q
 # import de librerias crear usuarios
 from .forms import AsignaturaForm, UserCreationWithMetadataForm, UsersMetadataForm, UsersAcademyForm
 # import de librerias listar salidas
 from coordinador.models import SalidaTerreno
 from .forms import SalidaTerrenoForm
 from django.shortcuts import get_object_or_404, redirect
-
-
 
 
 #home coordinador -------------------------------------------------------------------------------------
@@ -125,42 +126,66 @@ def obtener_secciones(request):
 
 # --------------------------------------  listar usuario  -----------------------------------------------------
 
-def listar_usuario(request):
-    usuarios = UsersMetadata.objects.all().order_by('-id')
-    page = request.GET.get('page', 1)
+# def listar_usuario(request):
+#     usuarios = UsersMetadata.objects.all().order_by('-id')
+#     usuarios_data = []
 
+#     for usuario in usuarios:
+#         user_academy = UsersAcademy.objects.filter(user=usuario.user).first()
+#         usuarios_data.append({
+#             'usuario': usuario,
+#             'user_academy': user_academy
+#         })
+#     page = request.GET.get('page', 1)
+
+#     try:
+#         paginator = Paginator(usuarios, 6)  # Cambio de cantidad a listar por usuario
+#         usuarios = paginator.page(page)
+#     except:
+#         raise Http404
+
+#     data = {
+#         'usuarios': usuarios,
+#         'paginator': paginator
+#     }
+
+#     return render(request, 'coordinador/usuarios/listar_usuarios.html', data)
+
+from django.core.paginator import Paginator
+from django.http import Http404
+from django.shortcuts import render
+from core.models import UsersMetadata, UsersAcademy
+
+def listar_usuario(request):
+    usuarios_metadata = UsersMetadata.objects.all().order_by('-id')
+    usuarios_data = []
+
+    for usuario in usuarios_metadata:
+        user_academy = UsersAcademy.objects.filter(user=usuario.user).first()
+        usuarios_data.append({
+            'usuario': usuario,
+            'user': usuario.user,  # Ahora pasamos el usuario directamente
+            'user_academy': user_academy
+        })
+
+    # Paginación
+    page = request.GET.get('page', 1)
     try:
-        paginator = Paginator(usuarios, 6)  # Cambio de cantidad a listar por usuario
-        usuarios = paginator.page(page)
+        paginator = Paginator(usuarios_data, 5)  # Cambio de cantidad a listar por usuario
+        usuarios_paginados = paginator.page(page)
     except:
         raise Http404
 
     data = {
-        'usuarios': usuarios,
+        'usuarios': usuarios_paginados,  # Ahora 'usuarios' tiene la estructura correcta
         'paginator': paginator
     }
 
     return render(request, 'coordinador/usuarios/listar_usuarios.html', data)
+
 
 # ----------------------------------------  Lista de usuarios  -----------------------------------------------------
-def lista_usuarios(request):
-    usuarios = UsersMetadata.objects.all().order_by('-id')
-    page = request.GET.get('page', 1)
 
-    try:
-        paginator = Paginator(usuarios, 6)  # Cambio de cantidad a listar por usuario
-        usuarios = paginator.page(page)
-    except:
-        raise Http404
-
-    data = {
-        'usuarios': usuarios,
-        'paginator': paginator
-    }
-
-    return render(request, 'coordinador/usuarios/listar_usuarios.html', data)
-
-from django.db.models import Q
 
 def lista_usuarios(request):
     # Obtener el valor de búsqueda del parámetro GET
@@ -195,8 +220,147 @@ def lista_usuarios(request):
     return render(request, 'coordinador/usuarios/listar_usuarios.html', {'usuarios': usuarios})
 
 
+#----------------------------------------  Editar usuario  -----------------------------------------------------
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.contrib.auth.models import User
+from .models import UsersMetadata, UsersAcademy
+from .forms import UserEditForm, UsersMetadataForm, UsersAcademyForm
 
+def editar_usuario(request, id):
+    print("Entró a editar")
+    print(id)
+
+    # Obtener el usuario que se va a editar
+    user = get_object_or_404(User, id=id)
+    print(user)
+    print("Pasó el user")
+
+    # Obtener o crear las instancias de metadata y academia
+    metadata, _ = UsersMetadata.objects.get_or_create(user=user)
+    print(metadata)
+    print("Pasó el metadata")
     
+    academy, _ = UsersAcademy.objects.get_or_create(user=user)
+    print(academy)
+    print("Pasó la academia")
+
+    if request.method == 'POST':
+        # Crear las instancias de los formularios con los datos enviados por POST
+        user_form = UserEditForm(request.POST, instance=user)
+        metadata_form = UsersMetadataForm(request.POST, request.FILES, instance=metadata)
+        academy_form = UsersAcademyForm(request.POST, instance=academy)
+
+        # Validar los formularios
+        if user_form.is_valid() and metadata_form.is_valid() and academy_form.is_valid():
+            # Guardar el usuario
+            user = user_form.save()
+
+            # Guardar la metadata
+            metadata = metadata_form.save(commit=False)
+            metadata.user = user  # Asociar metadata al usuario
+            metadata.username_field = user.username
+            metadata.save()
+
+            # Guardar la academia
+            academy = academy_form.save(commit=False)
+            academy.user = user  # Asociar academia al usuario
+            academy.save()
+
+            # Guardar las asignaturas seleccionadas (si existen)
+            asignaturas_seleccionadas = request.POST.getlist('asignaturas_inscritas')
+            academy.asignaturas_inscritas.set(asignaturas_seleccionadas)
+            academy.save()
+
+            messages.success(request, "Usuario actualizado correctamente!")
+            return redirect('coordinador:home_coordinador')  # Redirigir después de guardar
+        else:
+            messages.error(request, "Errores en el formulario, por favor corrígelos.")
+
+    else:
+        # Si no es un POST, crear formularios con los datos del usuario
+        user_form = UserEditForm(instance=user)
+        metadata_form = UsersMetadataForm(instance=metadata)
+        academy_form = UsersAcademyForm(instance=academy)
+
+    return render(request, 'coordinador/usuarios/editar_usuario.html', {
+        'user_form': user_form,
+        'metadata_form': metadata_form,
+        'academy_form': academy_form
+    })
+
+
+# from django.shortcuts import get_object_or_404, render, redirect
+# from django.contrib import messages
+# from .forms import UserCreationWithMetadataForm, UsersMetadataForm, UsersAcademyForm
+# from .models import User  # Asegúrate de tener el modelo adecuado importado
+
+# def editar_usuario(request, id):
+#     # Obtener el usuario que se va a editar
+#     user = get_object_or_404(User, id=id)
+
+#     # Obtener las instancias actuales de metadata y academia
+#     metadata = user.UsersMetadata  # Suponiendo que hay una relación uno a uno con metadata
+#     academy = user.UsersAcademy  # Lo mismo para academia
+    
+#     if request.method == 'POST':
+#         # Crear las instancias de los formularios con los datos enviados por POST
+#         user_form = UserCreationWithMetadataForm(request.POST, instance=user)
+#         metadata_form = UsersMetadataForm(request.POST, request.FILES, instance=metadata)
+#         academy_form = UsersAcademyForm(request.POST, instance=academy)
+
+#         # Validar los formularios
+#         if user_form.is_valid() and metadata_form.is_valid() and academy_form.is_valid():
+#             # Guardar el usuario
+#             user = user_form.save()
+
+#             # Guardar la metadata
+#             metadata = metadata_form.save(commit=False)
+#             metadata.user = user  # Asegurarse de que la metadata esté asociada al usuario
+#             metadata.username_field = user.username
+#             metadata.save()
+
+#             # Guardar la academia
+#             academy = academy_form.save(commit=False)
+#             academy.user = user  # Asegurarse de que la academia esté asociada al usuario
+#             academy.save()
+
+#             # Guardar las asignaturas seleccionadas (si existen)
+#             asignaturas_seleccionadas = request.POST.getlist('asignaturas_inscritas')
+#             academy.asignaturas_inscritas.set(asignaturas_seleccionadas)
+#             academy.save()
+
+#             messages.success(request, "Usuario actualizado correctamente!")
+#             return redirect('coordinador:home_coordinador')  # Redirigir después de guardar
+#         else:
+#             messages.error(request, "Errores en el formulario, por favor corrígelos.")
+    
+#     else:
+#         # Si no es un POST, crear formularios con los datos del usuario
+#         user_form = UserCreationWithMetadataForm(instance=user)
+#         metadata_form = UsersMetadataForm(instance=metadata)
+#         academy_form = UsersAcademyForm(instance=academy)
+
+#     return render(request, 'coordinador/usuarios/editar_usuario.html', {
+#         'user_form': user_form,
+#         'metadata_form': metadata_form,
+#         'academy_form': academy_form
+#     })
+
+# def eliminar_usuarios(request, id):
+#     # Obtén la instancia del usuario que deseas eliminar
+#     usuario = get_object_or_404(UsersMetadata, id=id)
+
+#     if request.method == 'POST':
+#         # Elimina el usuario
+#         usuario.user.delete()
+#         usuario.delete()
+        
+#         # Redirige a la página de lista de usuarios u otra página según tus necesidades
+#         return redirect('gest-usuarios')
+
+#     return render(request, 'ruta_de_la_plantilla_para_confirmar_eliminar.html', {'usuario': usuario})
+
     
 
 
@@ -217,7 +381,7 @@ def lista_usuarios(request):
 
 
 # ----------------------------------------  Crear usuario  -----------------------------------------------------
-@Coordinador_required
+
 def crear_usuario(request):
     if request.method == 'POST':
         # Crear las instancias de los formularios con los datos enviados por POST
@@ -267,7 +431,37 @@ def crear_usuario(request):
 
 
 
-     
+#crear grupo wsp ------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+@login_required
+@Coordinador_required
+def crear_grupo_wsp(request):
+    # Datos de ejemplo para los participantes
+    participantes = ["56971678520","56994980015"]
+    WHAPI_BEARER_TOKEN= "XzQPMnvGuJHKhaQczF8zkyGfsuFkYkMZ"
+
+    url = "https://gate.whapi.cloud/groups"
+    payload = {"participants": participantes, "subject": "Grupo de WhatsApp test"}
+    headers = {
+        "accept": "application/json",
+        "content-type": "application/json",
+        "authorization": f"Bearer {WHAPI_BEARER_TOKEN}"
+    }
+
+    try:
+        print("Sending POST request to WHAPI")
+        response = requests.post(url, json=payload, headers=headers)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        print("POST request successful")
+        response_data = response.json()
+        group_id = response_data.get('id', 'No ID found')
+        print(f"Group ID: {group_id}")
+        messages.success(request, f"Grupo de WhatsApp creado correctamente! ID: {group_id}")
+    except requests.exceptions.RequestException as e:
+        print(f"Error during POST request: {e}")
+        messages.error(request, f"Error al crear el grupo de WhatsApp: {e}")
+
+    return redirect('coordinador:home_coordinador')
 
 
 #salidas ---------------------------------------------------------------------------------------------
