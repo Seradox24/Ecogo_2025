@@ -110,14 +110,30 @@ WSGI_APPLICATION = 'Ecogo_2025.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+        
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ecogo_db',
+        'USER': 'admin',
+        'PASSWORD': 'uOb6DJXUO-BaXK',
+        'HOST': 'localhost',  # O la IP del servidor de MySQL
+        'PORT': '3306',  # Puerto predeterminado de MySQL
+        'OPTIONS': {
+            'charset': 'utf8mb4',
 
+        },
     }
 }
+
 
 # settings.py
 # DATABASES = {
