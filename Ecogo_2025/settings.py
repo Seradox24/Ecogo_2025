@@ -123,9 +123,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ecogo_db',
-        'USER': 'admin',
-        'PASSWORD': 'uOb6DJXUO-BaXK',
-        'HOST': 'localhost',  # O la IP del servidor de MySQL
+        'USER': 'eco_admin',#admin
+        'PASSWORD': conf["password"],
+        'HOST': conf['server'],  # O la IP del servidor de MySQL
         'PORT': '3306',  # Puerto predeterminado de MySQL
         'OPTIONS': {
             'charset': 'utf8mb4',

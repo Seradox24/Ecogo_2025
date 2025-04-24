@@ -26,6 +26,7 @@ urlpatterns = [
     path('crear-asignatura/', crear_asignatura, name="crear_asignatura"),
     path('editar-asignatura/<int:id>/', editar_asignatura, name="editar_asignatura"),
     path('eliminar-asignatura/<int:id>/', eliminar_asignatura, name="eliminar_asignatura"),
+    
 
 ]
 
